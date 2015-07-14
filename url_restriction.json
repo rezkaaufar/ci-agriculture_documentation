@@ -1,0 +1,21 @@
+{
+  "fo": {
+    "restricted_url": [
+      "/market/data/save",
+      "/market/data/location-potentials",
+      "/market/data/provinsi-desa-all",
+      "/unitPlan/all",
+      "/unitPlan/getUnitPlanBySeason",
+      "/unitPlan/getFieldLastSeason",
+      "/unitPlan/getUnitPlanDetail",
+      "/unitPlan/update",
+      "/unitPlan/delete",
+      "/unitPlan/insertUnitPlan",
+      "/unitPlan/assignFieldAgent"
+    ]
+  },
+  "unit" : {
+    "restricted_url": [
+    ]
+  }
+}

@@ -17,5 +17,10 @@
   "unit" : {
     "restricted_url": [
     ]
+  },
+  "admin" : {
+    "restricted_url": [
+		"/unitPlan/all"
+    ]
   }
 }

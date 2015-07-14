@@ -1,0 +1,1280 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: IFM
+basePath: /v2
+tags:
+  - name: Sales Leads
+    description: Information about leads
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Master Data
+    description: Information about master data
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Market Data
+    description: Information about market data
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Unit Planning
+    description: Information about unit planning
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+schemes:
+  - http
+paths:
+  /master/unit/findUnit:
+    get:
+      tags:
+        - Master Data
+      summary: Find Unit By Unit Id
+      description: Only search one unit
+      operationId: getUnitById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: Unit id that need to be considered for search
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+        '500':
+          description: internal server error
+  /master/unit/findAgent:
+    get:
+      tags:
+        - Master Data
+      summary: Find detail of agent by Unit id
+      description: Show all of agent data in a unit
+      operationId: getAgentByUnit
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: Unit that need to be considered for filter agent
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+        '500':
+          description: internal server error
+  /master/unit/listUnitSeason:
+    get:
+      tags:
+        - Master Data
+      summary: Find all Unit and all Season
+      description: Show all Unit and Season. Used in Unit Planning
+      operationId: listUnitAndSeason
+      produces:
+        - application/xml
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UnitSeason'
+        '400':
+          description: Invalid status value
+        '500':
+          description: internal server error
+  /master/unit/listUnit:
+    get:
+      tags:
+        - Master Data
+      summary: Find all Unit
+      description: Show all Unit
+      operationId: listUnit
+      produces:
+        - application/xml
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Unit'
+        '400':
+          description: Invalid status value
+        '500':
+          description: internal server error
+  /master/unit/listSeason:
+    get:
+      tags:
+        - Master Data
+      summary: Find all Season
+      description: Show all Season
+      operationId: listSeason
+      produces:
+        - application/xml
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Season'
+        '400':
+          description: Invalid status value
+        '500':
+          description: internal server error
+  /master/unit/getSeasonByUnit:
+    post:
+      tags:
+        - Master Data
+      summary: Find season corresponds to particular unit
+      description: Returns season code corresponds to particular unit
+      operationId: getSeasonInParticularUnit
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing tuple unit_id
+          required: true
+          schema:
+            $ref: '#/definitions/UnitId'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfSeason'
+        '400':
+          description: Invalid status value
+        '500':
+          description: internal server error
+  /master/desa/filter:
+    get:
+      tags:
+        - Master Data
+      summary: 'List all information of desa on given location (provinsi, kabupaten, kecamatan)'
+      description: 'List all information of desa on given location (provinsi, kabupaten, kecamatan)'
+      operationId: listFilteredDesa
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: provinsi
+          description: provinsi
+          required: true
+          type: string
+        - in: query
+          name: kabupaten
+          description: kabupaten
+          required: true
+          type: string
+        - in: query
+          name: kecamatan
+          description: kecamatan
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /master/list-provinsi:
+    get:
+      tags:
+        - Master Data
+      summary: List all available provinces
+      description: List all available provinces
+      operationId: listProvinces
+      produces:
+        - application/xml
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /master/list-kabupaten-of-provinsi:
+    get:
+      tags:
+        - Master Data
+      summary: List all available kabupaten on given province
+      description: List all available kabupaten on given province
+      operationId: listKabupatens
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: provinsi
+          description: kode provinsi
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /master/list-kecamatan-of-kabupaten:
+    get:
+      tags:
+        - Master Data
+      summary: List all available kecamatan on given kabupaten
+      description: List all available kecamatan on given kabupaten
+      operationId: listKecamatans
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: kabupaten
+          description: kode kabupaten
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /master/list-desa-of-kecamatan:
+    get:
+      tags:
+        - Master Data
+      summary: List all available desa on given kecamatan
+      description: List all available desa on given kecamatan
+      operationId: listDesas
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: kecamatan
+          description: kode kecamatan
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /master/list-season-available-unit:
+    get:
+      tags:
+        - Master Data
+      summary: List all available unit on given season
+      description: List all available unit on given season
+      operationId: listAvailableUnit
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: season_code
+          description: kode musim
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Important params -> 'unit_id' & 'name'
+        '400':
+          description: Invalid status value
+  /master/desa/assign-unit/one:
+    post:
+      tags:
+        - Master Data
+      summary: Assign unit to one desa
+      description: Assign unit to one desa
+      operationId: assignDesaSingle
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing tuple of desa_id and unit_id
+          required: true
+          schema:
+            $ref: '#/definitions/AssignOne'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /master/desa/assign-unit/many:
+    post:
+      tags:
+        - Master Data
+      summary: Assign unit to multiple desa
+      description: Assign unit to multiple desa
+      operationId: assignDesaMultiple
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing tuple of list of desa_id and unit_id
+          required: true
+          schema:
+            $ref: '#/definitions/AssignMany'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /market/data/location-potentials:
+    get:
+      tags:
+        - Market Data
+      summary: 'List desa and its potential on given location & musim'
+      description: Use this in market data input page
+      operationId: listMarketData
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: season_code
+          description: kode musim
+          required: true
+          type: string
+        - in: query
+          name: provinsi
+          description: provinsi
+          required: true
+          type: string
+        - in: query
+          name: kabupaten
+          description: kabupaten
+          required: true
+          type: string
+        - in: query
+          name: kecamatan
+          description: kecamatan
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListDesaPotensial'
+        '400':
+          description: Invalid status value
+  /market/data/save:
+    post:
+      tags:
+        - Market Data
+      summary: Update potensial desa on given location and season
+      description: Use this in market data input page
+      operationId: UpdateMarketData
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing list of to-be saved details
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateDesaPotensial'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /market/data/provinsi-desa-all:
+    get:
+      tags:
+        - Market Data
+      summary: 'List desa and its details on given provinsi & musim'
+      description: Use this in market data list page
+      operationId: listDetailedMarketData
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: season_code
+          description: kode musim
+          required: true
+          type: string
+        - in: query
+          name: provinsi_code
+          description: kode provinsi
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListMarketData'
+        '400':
+          description: Invalid status value
+  /market/data/delete:
+    post:
+      tags:
+        - Market Data
+      summary: Delete potensial desa on given location and season
+      description: Use this in market data list page
+      operationId: DeleteMarketData
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing list of to-be deleted details
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteDetails'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /unitPlan/all:
+    get:
+      tags:
+        - Unit Planning
+      summary: Find All Existing Unit Plan
+      description: Returns all Unit Plan
+      operationId: listUnitPlan
+      produces:
+        - application/xml
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfUnitPlan'
+        '400':
+          description: Invalid status value
+  /unitPlan/getUnitPlanBySeason:
+    get:
+      tags:
+        - Unit Planning
+      summary: Find unit plan details by season code
+      description: Returns unit plan by its season code
+      operationId: getUnitPlanBySeason
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: season code
+          description: Season Code for Each Commodity
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UnitPlanWithAgentPlanning'
+        '400':
+          description: Invalid status value
+  /unitPlan/getFieldLastSeason:
+    post:
+      tags:
+        - Unit Planning
+      summary: Find obtained field area in particular unit last season
+      description: Returns one obtained field area in particular unit last season
+      operationId: getFieldLastSeason
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing tuple of unit_id and season_code
+          required: true
+          schema:
+            $ref: '#/definitions/UnitIdAndSeasonCode'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/FieldLastSeason'
+        '400':
+          description: Invalid status value
+  /unitPlan/getUnitPlanDetail:
+    post:
+      tags:
+        - Unit Planning
+      summary: Find Unit plan Detail
+      description: Returns Unit Plan Detail By Unit ID and Season Code
+      operationId: getUnitPlanByUnitAndSeason
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing tuple of unit_id and season_code
+          required: true
+          schema:
+            $ref: '#/definitions/UnitIdAndSeasonCode'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UnitPlanWithAgentPlanning'
+        '400':
+          description: Invalid status value
+  /unitPlan/delete:
+    post:
+      tags:
+        - Unit Planning
+      summary: Delete unit plan based by unit id and season code
+      description: Remove unit plan from database
+      operationId: deleteUnitPlanByUnitAndSeason
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing tuple of unit_id and season_code
+          required: true
+          schema:
+            $ref: '#/definitions/UnitIdAndSeasonCode'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /unitPlan/insert:
+    post:
+      tags:
+        - Unit Planning
+      summary: Insert new Unit Plan to Database
+      description: Insert new Unit Plan by posting JSON containing all unit plan fields
+      operationId: insertUnitPlan
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing tuple of all unit plan fields
+          required: true
+          schema:
+            $ref: '#/definitions/UnitPlanWithoutAgentPlanning'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /unitPlan/assignFieldAgent:
+    post:
+      tags:
+        - Unit Planning
+      summary: Add agent planning to unit plan
+      description: Assign new agent to handle sales lead in each village
+      operationId: assignFieldAgentToUnitPlan
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: 'Json containing tuple of unit id, season code, and details of agent planning'
+          required: true
+          schema:
+            $ref: '#/definitions/UnitPlanOnlyIdAndSeasonWithAgentPlanning'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /unitPlan/update:
+    post:
+      tags:
+        - Unit Planning
+      summary: Update existing unit planning
+      description: Update existing unit planning by posting all fields in new json
+      operationId: updateUnitPlan
+      consumes:
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing all unit plan fields including agent planning
+          required: true
+          schema:
+            $ref: '#/definitions/UnitPlanWithAgentPlanning'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /salesLead/listLead:
+    get:
+      tags:
+        - Sales Leads
+      summary: List leads in a season and unit
+      description: Show all of leads in a season and unit
+      operationId: getLeadBySeasonandId
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: id of unit
+          required: true
+          type: integer
+        - in: query
+          name: season_code
+          description: Season that need to be considered for filter leads
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /salesLead/listLead/fma:
+    get:
+      tags:
+        - Sales Leads
+      summary: List leads in a season and unit for FMA
+      description: Show all of leads in a season and unit for FMA
+      operationId: getLeadBySeasonandId
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: agent_id
+          description: id of agent
+          required: true
+          type: integer
+        - in: query
+          name: season_code
+          description: Season that need to be considered for filter leads
+          required: true
+          type: string
+        - in: query
+          name: search
+          description: Part of string that need to be considered for filter leads
+          required: false
+          type: string
+        - in: query
+          name: pageSize
+          description: number of leads that will be showed in a page
+          required: true
+          type: integer
+        - in: query
+          name: page
+          description: page of leads that will be showed
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+  /salesLead/findLead:
+    get:
+      tags:
+        - Sales Leads
+      summary: Find Leads By Lead Id
+      description: Only search one lead
+      operationId: getLeadById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: lead_id
+          description: Lead id that need to be considered for search
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+  /salesLead/insert:
+    post:
+      tags:
+        - Sales Leads
+      summary: Create new lead
+      description: Create new lead
+      operationId: insertLead
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing basic and contact information of lead
+          required: true
+          schema:
+            $ref: '#/definitions/DataLead'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+        '500':
+          description: internal server error
+  /salesLead/update:
+    post:
+      tags:
+        - Sales Leads
+      summary: Update existing lead
+      description: Update existing lead
+      operationId: updateLead
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing basic and contact information of lead
+          required: true
+          schema:
+            $ref: '#/definitions/DataUpdateLead'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
+        '500':
+          description: internal server error
+  /salesLead/delete:
+    post:
+      tags:
+        - Sales Leads
+      summary: Delete leads
+      description: Delete leads
+      operationId: deleteLead
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing List of lead id
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteLead'
+      responses:
+        '200':
+          description: successful operation
+        '500':
+          description: internal server error
+  /salesLead/assignStatus:
+    post:
+      tags:
+        - Sales Leads
+      summary: Assign Status to leads
+      description: Assign Status to leads
+      operationId: assignStatus
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing array of lead id and its status
+          required: true
+          schema:
+            $ref: '#/definitions/AssignStatus'
+      responses:
+        '200':
+          description: successful operation
+  /salesLead/assignTarget:
+    post:
+      tags:
+        - Sales Leads
+      summary: Assign Target to leads
+      description: Assign Target to leads
+      operationId: assignTarget
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing array of lead id and its target
+          required: true
+          schema:
+            $ref: '#/definitions/AssignTarget'
+      responses:
+        '200':
+          description: successful operation
+  /salesLead/previousData:
+    get:
+      tags:
+        - Sales Leads
+      summary: Find newest inserted lead
+      description: Find newest inserted lead
+      operationId: previousData
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+definitions:
+  AssignOne:
+    type: object
+    properties:
+      desa_id:
+        type: integer
+        format: int64
+      unit_id:
+        type: integer
+        format: int64
+    xml:
+      name: AssignOne
+  AssignMany:
+    type: object
+    properties:
+      list_desa:
+        type: array
+        items:
+          type: integer
+          format: int64
+      unit_id:
+        type: integer
+        format: int64
+  ListDesaPotensial:
+    type: array
+    items:
+      $ref: '#/definitions/DesaPotensial'
+  DesaPotensial:
+    type: object
+    properties:
+      season_code:
+        type: string
+      desa_id:
+        type: string
+      desa_name:
+        type: string
+      provinsi_code:
+        type: string
+      potential:
+        type: integer
+        format: int64
+  ListMarketData:
+    type: array
+    items:
+      $ref: '#/definitions/MarketDataDetails'
+  MarketDataDetails:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      unit_name:
+        type: string
+      unit_suggested_id:
+        type: integer
+        format: int64
+      unit_suggested_name:
+        type: string
+      desa_id:
+        type: integer
+        format: int64
+      desa_name:
+        type: string
+      kecamatan:
+        type: string
+      kabupaten:
+        type: string
+      customer:
+        type: integer
+        format: int64
+      potential:
+        type: integer
+        format: int64
+      season_code:
+        type: string
+  UpdateDesaPotensial:
+    type: object
+    properties:
+      season_code:
+        type: string
+      list_desa:
+        type: array
+        items:
+          $ref: '#/definitions/UpdateDetails'
+  UpdateDetails:
+    type: object
+    properties:
+      season_code:
+        type: string
+      desa_id:
+        type: integer
+        format: int64
+      desa_name:
+        type: string
+      provinsi_code:
+        type: string
+      potential:
+        type: integer
+        format: int64
+  DeleteDetails:
+    type: object
+    properties:
+      desa_id:
+        type: integer
+        format: int64
+      season_code:
+        type: string
+  UnitIdAndSeasonCode:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      season_code:
+        type: string
+        format: string
+    xml:
+      name: UnitIdAndSeasonCode
+  UnitId:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+    xml:
+      name: UnitId
+  UnitPlanWithoutAgentPlanning:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      unit_name:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      season_target:
+        type: integer
+        format: int64
+      field_last_season:
+        type: integer
+        format: int64
+      retention_rate:
+        type: integer
+        format: int64
+      new_field_target:
+        type: integer
+        format: int64
+      conversion_target:
+        type: integer
+        format: int64
+      sales_lead_target:
+        type: integer
+        format: int64
+    xml:
+      name: UnitPlanWithoutAgentPlanning
+  UnitPlanOnlyIdAndSeasonWithAgentPlanning:
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      season_code:
+        type: string
+        format: string
+      agent_planning:
+        type: array
+        items:
+          $ref: '#/definitions/AgentPlanning'
+    xml:
+      name: UnitPlanOnlyIdAndSeasonWithAgentPlanning
+  FieldAgent:
+    properties:
+      agent_id:
+        type: integer
+        format: int64
+      agent_name:
+        type: string
+        format: string
+    xml:
+      name: FieldAgent
+  AgentPlanning:
+    type: object
+    properties:
+      sales_lead_target_each:
+        type: integer
+        format: int64
+      field_potential:
+        type: integer
+        format: int64
+      desa:
+        type: string
+        format: string
+      field_agent:
+        type: array
+        items:
+          $ref: '#/definitions/FieldAgent'
+  UnitPlanWithAgentPlanning:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      unit_name:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      season_target:
+        type: integer
+        format: int64
+      field_last_season:
+        type: integer
+        format: int64
+      retention_rate:
+        type: integer
+        format: int64
+      new_field_target:
+        type: integer
+        format: int64
+      conversion_target:
+        type: integer
+        format: int64
+      sales_lead_target:
+        type: integer
+        format: int64
+      agent_planning:
+        type: array
+        items:
+          $ref: '#/definitions/AgentPlanning'
+    xml:
+      name: UnitPlanWithAgentPlanning
+  Unit:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      unit_head:
+        type: integer
+        format: int64
+      agent:
+        type: array
+        items:
+          type: integer
+          format: int64
+  Season:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      code:
+        type: string
+      commodity:
+        type: string
+      season:
+        type: string
+      year:
+        type: integer
+        format: int64
+      order:
+        type: integer
+        format: int64
+  UnitSeason:
+    type: object
+    properties:
+      unit:
+        type: array
+        items:
+          $ref: '#/definitions/Unit' 
+      season:
+        type: array
+        items:
+          $ref: '#/definitions/Season' 
+  ListOfSeason:
+    type: array
+    items:
+      type: integer
+      format: int64
+  ListOfUnitPlan:
+    type: array
+    items:
+      $ref: '#/definitions/UnitPlanWithAgentPlanning'
+  FieldLastSeason:
+    type: object
+    items:
+      type: integer
+      format : int64
+  DataLead:
+    type: object
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+      unit_id:
+        type: integer
+        format: int64
+      agent_id:
+        type: integer
+        format: int64
+      season_code:
+        type: string
+      potential_field:
+        type: number
+        format: float
+      target_field:
+        type: number
+        format: float
+      number_of_farmers:
+        type: integer
+        format: int64
+      additional_notes:
+        type: string
+      contact:
+        type: array
+        items:
+          $ref: '#/definitions/ContactLead'
+  DataUpdateLead:
+    type: object
+    properties:
+      lead_id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      type:
+        type: string
+      unit_id:
+        type: integer
+        format: int64
+      agent_id:
+        type: integer
+        format: int64
+      season_code:
+        type: string
+      potential_field:
+        type: number
+        format: float
+      target_field:
+        type: number
+        format: float
+      number_of_farmers:
+        type: integer
+        format: int64
+      status_leads:
+        type: string
+      additional_notes:
+        type: string
+      contact:
+        type: array
+        items:
+          $ref: '#/definitions/ContactLead'
+  ContactLead:
+    type: object
+    properties:
+      name:
+        type: string
+      relationship:
+        type: string
+      address:
+        type: string
+      provinsi:
+        type: string
+      kabupaten:
+        type: string
+      kecamatan:
+        type: string
+      desa:
+        type: string
+      rw:
+        type: string
+      rt:
+        type: string
+      kodepos:
+        type: string
+      no_tlp:
+        type: string
+      no_hp:
+        type: array
+        items:
+          $ref: '#/definitions/ListHP'
+  ListHP:
+    type: string
+  DeleteLead:
+    type: object
+    properties:
+      lead_id:
+        type: array
+        items:
+          $ref: '#/definitions/LeadId'
+  LeadId:
+    type: integer
+    format: int64
+  AssignStatus:
+    type: array
+    items:
+      $ref: '#/definitions/Status'
+  Status:
+    type: object
+    properties:
+      lead_id:
+        type: integer
+        format: int64
+      status_leads:
+        type: string
+  AssignTarget:
+    type: array
+    items:
+      $ref: '#/definitions/Target'
+  Target:
+    type: object
+    properties:
+      lead_id:
+        type: integer
+        format: int64
+      target_field:
+        type: number
+        format: float
+externalDocs:
+  description: CI - Agriculture
+  url: 'http://ci-agriculture.com/'

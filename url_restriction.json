@@ -13,8 +13,8 @@
       "/unitPlan/assignFieldAgent"
     ],
   "unit" : [
-   ],
+    ],
   "admin" :[
-		"/unitPlan/all"
-   ]
+      "/unitPlan/all"
+    ]
 }

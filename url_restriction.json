@@ -1,6 +1,5 @@
 {
-  "fo": {
-    "restricted_url": [
+  "fo": [
       "/market/data/save",
       "/market/data/location-potentials",
       "/market/data/provinsi-desa-all",
@@ -12,15 +11,10 @@
       "/unitPlan/delete",
       "/unitPlan/insertUnitPlan",
       "/unitPlan/assignFieldAgent"
-    ]
-  },
-  "unit" : {
-    "restricted_url": [
-    ]
-  },
-  "admin" : {
-    "restricted_url": [
+    ],
+  "unit" : [
+   ],
+  "admin" :[
 		"/unitPlan/all"
-    ]
-  }
+   ]
 }

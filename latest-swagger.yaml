@@ -904,11 +904,10 @@ definitions:
         format: int64
       unit_name:
         type: string
-      unit_suggested_id:
-        type: integer
-        format: int64
-      unit_suggested_name:
-        type: string
+      unit_suggested:
+        type: array
+        items:
+          $ref: '#/definitions/SuggestedDetails'
       desa_id:
         type: integer
         format: int64
@@ -926,6 +925,17 @@ definitions:
         format: int64
       season_code:
         type: string
+  SuggestedDetails:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      unit_name:
+        type: string
+      distance:
+        type: number
+        format: double
   UpdateDesaPotensial:
     type: object
     properties:

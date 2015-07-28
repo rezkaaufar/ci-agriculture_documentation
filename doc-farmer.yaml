@@ -1,0 +1,55 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: IFM
+basePath: /v2
+tags:
+  - name: Farmer
+    description: Information about Farmer
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Farmer Group
+    description: Information about Farmer Group
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+schemes:
+  - http
+paths:
+  /farmerGroup/all:
+    get:
+      tags:
+        - Farmer Group
+      summary: List of all group of farmer
+      description: Show all group of farmer in database
+      operationId: listFarmerGroup
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+  /farmerGroup/findFarmerGroup:
+    get:
+      tags:
+        - Farmer Group
+      summary: Find farmer group by farmer group id
+      description: Only search one group of farmer
+      operationId: getFarmerGroupById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: _id
+          description: Farmer group id that need to be considered for search
+          required: true
+          type : integer
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: data not found
+externalDocs:
+  description: CI - Agriculture
+  url: 'http://ci-agriculture.com/'

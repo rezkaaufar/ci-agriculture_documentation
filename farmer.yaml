@@ -1,0 +1,638 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: IFM
+basePath: /v2
+tags:
+  - name: Farmer
+    description: Information about Farmer
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Farmer Group
+    description: Information about Farmer Group
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+schemes:
+  - http
+paths:
+  /farmer/all:
+    get:
+      tags:
+        - Farmer
+      summary: List of all farmer
+      description: Show all farmer in database
+      operationId: listFarmer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+  /farmer/findFarmer:
+    get:
+      tags:
+        - Farmer
+      summary: Find particular farmer by its ID
+      description: Show farmer by ID in database
+      operationId: getFarmerById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_id
+          description: Farmer's object id
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+  /farmer/re-regis:
+    get:
+      tags:
+        - Farmer
+      summary: Find farmer information for existing Farmer
+      description: Show existing farmer for re-registration
+      operationId: getFarmerByCifAndName
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: cif
+          description: Farmer's cif id from vasham
+          required: true
+          type : string
+        - in: query
+          name: name
+          description: Farmer's name
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+  /farmer/insert:
+    post:
+      tags:
+        - Farmer
+      summary: Insert new Farmer to database
+      description: Insert new Farmer to database
+      operationId: insertFarmer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing basic information of farmer
+          required: true
+          schema:
+            $ref: '#/definitions/Farmer'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmer/insertFarmerPersonalDetails:
+    post:
+      tags:
+        - Farmer
+      summary: Assign Personal Details to Farmer in database
+      description: Assign Personal Details to Farmer in database
+      operationId: insertFarmerPersonalDetails
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing personal details information of farmer
+          required: true
+          schema:
+            $ref: '#/definitions/FarmerPersonalDetails'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmer/insertFarmerContact:
+    post:
+      tags:
+        - Farmer
+      summary: Assign Contact Details to Farmer in database
+      description: Assign Contact Details to Farmer in database
+      operationId: insertFarmerContact
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing contact information of farmer
+          required: true
+          schema:
+            $ref: '#/definitions/FarmerContactList'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmer/update:
+    post:
+      tags:
+        - Farmer
+      summary: Update existing Farmer
+      description: Update existing Farmer
+      operationId: updateFarmer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing basic information, personal details and contact information of farmer
+          required: true
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmer/delete:
+    post:
+      tags:
+        - Farmer
+      summary: Delete existing Farmer
+      description: Delete existing Farmer and also deleting every dependency of Farmer 
+      operationId: deleteFarmer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing list of farmer_id
+          required: true
+          schema:
+            $ref: '#/definitions/FarmerDelete'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmer/allField:
+    get:
+      tags:
+        - Farmer
+      summary: List all of farmer's farmer
+      description: Show all farmer's field exists in database
+      operationId: listFarmerField
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+  /farmer/findFarmerField:
+    get:
+      tags:
+        - Farmer
+      summary: Find particular farmer field by farmer ID
+      description: Show farmer field by farmer ID in database
+      operationId: getFarmerFieldByFarmerId
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_id
+          description: Farmer's object id
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+  /farmer/insertFarmerField:
+    post:
+      tags:
+        - Farmer
+      summary: Insert new Farmer Field to database
+      description: Insert new Farmer Field to database
+      operationId: insertFarmerField
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of farmer field
+          required: true
+          schema:
+            $ref: '#/definitions/FarmerField'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmer/updateFarmerField:
+    post:
+      tags:
+        - Farmer
+      summary: Update existing Farmer's Field
+      description: Update existing Farmer's Field
+      operationId: updateFarmerField
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing basic information of Farmer's Field
+          required: true
+          schema:
+            $ref: '#/definitions/FarmerFieldUpdate'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmer/delete:
+    post:
+      tags:
+        - Farmer
+      summary: Delete existing Farmer's Field
+      description: Delete existing Farmer's Field and also deleting its id on Farmer's Collection 
+      operationId: deleteFarmerField
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing list of farmer's field object id
+          required: true
+          schema:
+            $ref: '#/definitions/FarmerFieldDelete'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmerGroup/all:
+    get:
+      tags:
+        - Farmer Group
+      summary: List of all group of farmer
+      description: Show all group of farmer in database
+      operationId: listFarmerGroup
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+  /farmerGroup/findFarmerGroup:
+    get:
+      tags:
+        - Farmer Group
+      summary: Find farmer group by farmer group id
+      description: Only search one group of farmer
+      operationId: getFarmerGroupById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: _id
+          description: Farmer group id that need to be considered for search
+          required: true
+          type : integer
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: data not found
+definitions:
+  Farmer:
+    type: object
+    properties:
+      cif:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      gender:
+        type: string
+        format: string
+      season-code:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      lead_id:
+        type: string
+        format: string
+      lead_name:
+        type: string
+        format: string
+      address:
+        type: string
+        format: string
+      provinsi:
+        type: string
+        format: string
+      kabupaten:
+        type: string
+        format: string
+      kecamatan:
+        type: string
+        format: string
+      desa:
+        type: string
+        format: string
+      RW:
+        type: string
+        format: string
+      RT:
+        type: string
+        format: string
+      phone_number:
+        type: array
+        items:
+          type: string
+          format: string
+    xml:
+      name: Farmer
+  FarmerPersonalDetails:
+    type: object
+    properties:
+      farmer_id:
+        type: string
+        format: string
+      KTP:
+        type: string
+        format: string
+      KK:
+        type: string
+        format: string
+      birthplace:
+        type: string
+        format: string
+      birthday:
+        type: string
+        format: string
+      farmer_id:
+        type: string
+        format: string
+      num_of_dependence:
+        type: integer
+        format: int64
+      marital_status:
+        type: string
+        format: string
+      mothers_name:
+        type: string
+        format: string
+      residence_period:
+        type: integer
+        format: int64
+      education_background:
+        type: string
+        format: string
+      farming_experience:
+        type: integer
+        format: int64
+      alternate_job:
+        type: string
+        format: string
+    xml:
+      name: FarmerPersonalDetails
+  FarmerContactList:
+    type: object
+    properties:
+      farmer_id:
+        type: string
+        format: string
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/FarmerContact'
+  FarmerContact:
+    type: object
+    properties:
+      contact_name:
+        type: string
+        format: string
+      address:
+        type: string
+        format: string
+      relationship:
+        type: string
+        format: string
+      provinsi:
+        type: string
+        format: string
+      kabupaten:
+        type: string
+        format: string
+      kecamatan:
+        type: string
+        format: string
+      desa:
+        type: string
+        format: string
+      RW:
+        type: string
+        format: string
+      RT:
+        type: string
+        format: string
+      phone_number:
+        type: array
+        items:
+          type: string
+          format: string
+  FarmerUpdate:
+    type: object
+    properties:
+      farmer_id:
+        type: string
+        format: string
+      cif:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      gender:
+        type: string
+        format: string
+      season-code:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      lead_id:
+        type: string
+        format: string
+      lead_name:
+        type: string
+        format: string
+      address:
+        type: string
+        format: string
+      provinsi:
+        type: string
+        format: string
+      kabupaten:
+        type: string
+        format: string
+      kecamatan:
+        type: string
+        format: string
+      desa:
+        type: string
+        format: string
+      RW:
+        type: string
+        format: string
+      RT:
+        type: string
+        format: string
+      phone_number:
+        type: array
+        items:
+          type: string
+          format: string
+      KTP:
+        type: string
+        format: string
+      KK:
+        type: string
+        format: string
+      birthplace:
+        type: string
+        format: string
+      birthday:
+        type: string
+        format: string
+      farmer_id:
+        type: string
+        format: string
+      num_of_dependence:
+        type: integer
+        format: int64
+      marital_status:
+        type: string
+        format: string
+      mothers_name:
+        type: string
+        format: string
+      residence_period:
+        type: integer
+        format: int64
+      education_background:
+        type: string
+        format: string
+      farming_experience:
+        type: integer
+        format: int64
+      alternate_job:
+        type: string
+        format: string
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/FarmerContact'
+  FarmerDelete:
+    type: object
+    properties:
+      _id:
+        type: array
+        items:
+          type: string
+          format: string
+  FarmerField:
+    properties:
+      farmer_id:
+        type: string
+        format: string
+      field_area:
+        type: integer
+        format: int64
+      desa:
+        type: string
+        format: string
+      kecamatan:
+        type: string
+        format: string
+      is_certified:
+        type: boolean
+        format: boolean
+      ownership:
+        type: string
+        format: string
+      owned_since:
+        type: string
+        format: string
+  FarmerFieldUpdate:
+    properties:
+      farmer_id:
+        type: string
+        format: string
+      field_area:
+        type: integer
+        format: int64
+      desa:
+        type: string
+        format: string
+      kecamatan:
+        type: string
+        format: string
+      is_certified:
+        type: boolean
+        format: boolean
+      ownership:
+        type: string
+        format: string
+      owned_since:
+        type: string
+        format: string
+      field_id:
+        type: string
+        format: string
+  FarmerFieldDelete:
+    type: object
+    properties:
+      _id:
+        type: array
+        items:
+          type: string
+          format: string
+externalDocs:
+  description: CI - Agriculture
+  url: 'http://ci-agriculture.com/'

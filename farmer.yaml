@@ -71,6 +71,47 @@ paths:
       responses:
         '200':
           description: successful operation
+  /farmer/findFarmerByAgentAndSeason:
+    get:
+      tags:
+        - Farmer
+      summary: Find farmer information by its agent_id and season_code
+      description: Show existing farmer by its agent_id and season_code
+      operationId: getFarmerByAgentAndSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: agent_id
+          description: Farmer's agent_id from vasham
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Farmer's season_code
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+  /farmer/findFarmerByUnit:
+    get:
+      tags:
+        - Farmer
+      summary: Find farmer information by its unit_id
+      description: Show existing farmer by its unit_id
+      operationId: getFarmerByUnit
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: Farmer's unit_id
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
   /farmer/insert:
     post:
       tags:

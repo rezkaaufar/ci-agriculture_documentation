@@ -617,6 +617,32 @@ paths:
           description: successful operation
         '400':
           description: Invalid status value
+  /unitPlan/getFieldAgentDesa:
+    get:
+      tags:
+        - Unit Planning
+      summary: Find desa which has been assigned to field_agent
+      description: Returns desa which has been assigned to field agent
+      operationId: getFieldAgentDesa
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: season_code
+          description: Season Code for Each Commodity
+          required: true
+          type: string
+        - in: query
+          name: fieldAgentId
+          description: Field Agent Id that we wish to know his Desa
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid status value
   /unitPlan/update:
     post:
       tags:

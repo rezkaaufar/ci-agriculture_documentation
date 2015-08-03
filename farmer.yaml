@@ -109,9 +109,44 @@ paths:
           description: Farmer's unit_id
           required: true
           type : string
+  /farmer/findFarmerBySeason:
+    get:
+      tags:
+        - Farmer
+      summary: Find farmer information by its season_code
+      description: Show existing farmer by its season_code
+      operationId: getFarmerBySeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: season_code
+          description: Farmer's season_code
+          required: true
+          type : string
       responses:
         '200':
           description: successful operation
+  /farmer/findFarmerByUnitAndSeason:
+    get:
+      tags:
+        - Farmer
+      summary: Find farmer information by its unit_id and season_code
+      description: Show existing farmer by its unit_id and season_code
+      operationId: getFarmerByUnitAndSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: Farmer's unit_id
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Farmer's season_code
+          required: true
+          type : string
   /farmer/insert:
     post:
       tags:

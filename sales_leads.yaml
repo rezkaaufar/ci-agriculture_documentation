@@ -42,7 +42,7 @@ paths:
           name: unit_id
           description: Unit id that need to be considered for search
           required: true
-          type: integer
+          type: string
       responses:
         '200':
           description: successful operation
@@ -64,7 +64,7 @@ paths:
           name: unit_id
           description: Unit that need to be considered for filter agent
           required: true
-          type: integer
+          type: string
       responses:
         '200':
           description: successful operation
@@ -998,8 +998,8 @@ definitions:
     type: object
     properties:
       unit_id:
-        type: integer
-        format: int64
+        type: string
+        format: string
       season_code:
         type: string
         format: string
@@ -1009,16 +1009,16 @@ definitions:
     type: object
     properties:
       unit_id:
-        type: integer
-        format: int64
+        type: string
+        format: string
     xml:
       name: UnitId
   UnitPlanWithoutAgentPlanning:
     type: object
     properties:
       unit_id:
-        type: integer
-        format: int64
+        type: string
+        format: string
       unit_name:
         type: string
         format: string
@@ -1048,8 +1048,8 @@ definitions:
   UnitPlanOnlyIdAndSeasonWithAgentPlanning:
     properties:
       unit_id:
-        type: integer
-        format: int64
+        type: string
+        format: string
       season_code:
         type: string
         format: string
@@ -1089,8 +1089,8 @@ definitions:
     type: object
     properties:
       unit_id:
-        type: integer
-        format: int64
+        type: string
+        format: string
       unit_name:
         type: string
         format: string
@@ -1125,8 +1125,8 @@ definitions:
     type: object
     properties:
       unit_id:
-        type: integer
-        format: int64
+        type: string
+        format: string
       name:
         type: string
       unit_head:
@@ -1141,8 +1141,8 @@ definitions:
     type: object
     properties:
       id:
-        type: integer
-        format: int64
+        type: string
+        format: string
       code:
         type: string
       commodity:
@@ -1169,8 +1169,8 @@ definitions:
   ListOfSeason:
     type: array
     items:
-      type: integer
-      format: int64
+      type: string
+      format: string
   ListOfUnitPlan:
     type: array
     items:

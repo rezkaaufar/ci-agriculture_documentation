@@ -665,7 +665,7 @@ definitions:
   FarmerContact:
     type: object
     properties:
-      contact_name:
+      name:
         type: string
         format: string
       address:

@@ -365,16 +365,162 @@ paths:
         - application/json
       parameters:
         - in: query
-          name: _id
+          name: farmer_group_id
           description: Farmer group id that need to be considered for search
           required: true
-          type : integer
+          type : string
       responses:
         '200':
           description: successful operation
         '404':
           description: data not found
+  /farmerGroup/insert:
+    post:
+      tags:
+        - Farmer Group
+      summary: Insert new farmer group to new database
+      description: Insert new farmer group to new database
+      operationId: insertFarmerGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Json containing information of Farmer's Group
+        required: true
+        schema:
+          $ref: '#/definitions/InsertFarmerGroup'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmerGroup/update:
+    post:
+      tags:
+        - Farmer Group
+      summary: Update existing Farmer Group
+      description: Update existing Farmer Group 
+      operationId: updateFarmerGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Json containing information of Farmer's Group
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateFarmerGroup'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /farmerGroup/delete:
+    post:
+      tags:
+        - Farmer Group
+      summary: Delete existing Farmer's Group
+      description: Delete existing Farmer's Group
+      operationId: deleteFarmerGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing list of farmer's group object id
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteFarmerGroup'
+      responses:
+        '200':
+          description: successful operation
+        '500':
+          description: internal server error
 definitions:
+  InsertFarmerGroup:
+    type: object
+    properties:
+      name:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      leader_id:
+        type: string
+        format: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_id:
+        type: array
+        items:
+          type: string
+          format: string
+      additional_notes:
+        type: string
+        format: string
+  UpdateFarmerGroup:
+    type: object
+    properties:
+      farmer_group_id:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      leader_id:
+        type: string
+        format: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_id:
+        type: array
+        items:
+          type: string
+          format: string
+      additional_notes:
+        type: string
+        format: string
+  DeleteFarmerGroup:
+    type: object
+    properties:
+      farmer_group_id:
+        type: array
+        items:
+          type: string
+          format: string
   Farmer:
     type: object
     properties:

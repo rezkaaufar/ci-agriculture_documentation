@@ -441,6 +441,8 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfFarmerGroup'
   /farmerGroup/findFarmerGroup:
     get:
       tags:
@@ -459,8 +461,37 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerGroupDetail'
         '404':
           description: data not found
+  /farmerGroup/farmerGroupByUnitandSeason:
+    get:
+      tags:
+        - Farmer Group
+      summary: Find farmer group by farmer unit id or season code
+      description: Search list of farmer group by unit id or season code
+      operationId: getFarmerGroupByUnitandSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: Unit id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Season code that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfFarmerGroup'
+        '400':
+          description: invalid value of parameters
   /farmerGroup/insert:
     post:
       tags:
@@ -482,10 +513,12 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerGroupDetail'
         '400':
           description: bad request
         '500':
-          description: internal server error
+          description: internal server error or group already exist
   /farmerGroup/update:
     post:
       tags:
@@ -507,10 +540,12 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerGroupDetail'
         '400':
           description: bad request
         '500':
-          description: internal server error
+          description: internal server error or group already exist
   /farmerGroup/delete:
     post:
       tags:
@@ -1011,6 +1046,69 @@ definitions:
     type: object
     properties:
       public_url:
+        type: string
+        format: string
+  ListOfFarmerGroup:
+    type: array
+    items:
+      $ref: '#/definitions/FarmerGroupDetail'
+  FarmerGroupDetail:
+    type: object
+    properties:
+      farmer_group_id:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      agent:
+        type: array
+        items:
+          $ref: '#/definitions/AgentFarmerGroup'
+      leader_id:
+        type: string
+        format: string
+      leader_name:
+        type: string
+        format: string
+      farmer:
+        type: array
+        items:
+          $ref: '#/definitions/FarmerInFarmerGroup'
+      additional_notes:
+        type: string
+        format: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+  AgentFarmerGroup:
+    type: object
+    properties:
+      agent_id:
+        type: string
+        format: string
+      agent_name:
+        type: string
+        format: string
+  FarmerInFarmerGroup:
+    type: object
+    properties:
+      farmer_id:
+        type: string
+        format: string
+      farmer_name:
         type: string
         format: string
 externalDocs:

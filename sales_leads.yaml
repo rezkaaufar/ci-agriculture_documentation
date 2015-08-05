@@ -689,9 +689,9 @@ paths:
     get:
       tags:
         - Sales Leads
-      summary: List leads in a season and unit
-      description: Show all of leads in a season and unit
-      operationId: getLeadBySeasonandId
+      summary: List leads in a season or unit
+      description: Show all of leads in a season or unit
+      operationId: getLeadBySeasonandUnitId
       produces:
         - application/json
       parameters:
@@ -699,7 +699,7 @@ paths:
           name: unit_id
           description: id of unit
           required: true
-          type: integer
+          type: string
         - in: query
           name: season_code
           description: Season that need to be considered for filter leads
@@ -708,15 +708,15 @@ paths:
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Invalid status value
+          schema:
+            $ref: '#/definitions/ListOfLeadsCustomContact'
   /salesLead/listLead/fma:
     get:
       tags:
         - Sales Leads
       summary: List leads in a season and unit for FMA
       description: Show all of leads in a season and unit for FMA
-      operationId: getLeadBySeasonandId
+      operationId: getLeadBySeasonandAgentId
       produces:
         - application/json
       parameters:
@@ -724,7 +724,7 @@ paths:
           name: agent_id
           description: id of agent
           required: true
-          type: integer
+          type: string
         - in: query
           name: season_code
           description: Season that need to be considered for filter leads
@@ -738,18 +738,18 @@ paths:
         - in: query
           name: pageSize
           description: number of leads that will be showed in a page
-          required: true
+          required: false
           type: integer
         - in: query
           name: page
           description: page of leads that will be showed
-          required: true
+          required: false
           type: integer
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Invalid status value
+          schema:
+            $ref: '#/definitions/ListOfLeadsCustomContact'
   /salesLead/findLead:
     get:
       tags:
@@ -764,10 +764,14 @@ paths:
           name: lead_id
           description: Lead id that need to be considered for search
           required: true
-          type: integer
+          type: string
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/LeadDetail'
+        '404':
+          description: lead not found
   /salesLead/insert:
     post:
       tags:
@@ -785,12 +789,16 @@ paths:
           description: Json containing basic and contact information of lead
           required: true
           schema:
-            $ref: '#/definitions/DataLead'
+            $ref: '#/definitions/InsertLeadDetail'
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/LeadDetail'
         '400':
-          description: Invalid status value
+          description: invalid field or data already exist
+        '404':
+          description: lead not found
         '500':
           description: internal server error
   /salesLead/update:
@@ -810,12 +818,16 @@ paths:
           description: Json containing basic and contact information of lead
           required: true
           schema:
-            $ref: '#/definitions/DataUpdateLead'
+            $ref: '#/definitions/UpdateLeadDetail'
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/LeadDetail'
         '400':
-          description: Invalid status value
+          description: invalid field or data already exist
+        '404':
+          description: lead not found
         '500':
           description: internal server error
   /salesLead/delete:
@@ -895,6 +907,10 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/LeadDetail'
+        '404':
+          description: lead not found
 definitions:
   AssignOne:
     type: object
@@ -1199,6 +1215,10 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/LeadDetail'
+  ListOfLeadsCustomContact:
+    type: array
+    items:
+      $ref: '#/definitions/LeadDetailCustomContact'
   AgentDetail:
     type: object
     properties:
@@ -1299,6 +1319,158 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ContactLead'
+  InsertLeadDetail:
+    type: object
+    properties:
+      name:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      desa_id:
+        type: string
+        format: string
+      agent_id:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      potential_field:
+        type: number
+        format: float
+      target_field:
+        type: number
+        format: float
+      number_of_farmers:
+        type: number
+        format: int32
+      additional_notes:
+        type: string
+        format: string
+      contact:
+        type: array
+        items:
+          $ref: '#/definitions/ContactLead'
+  UpdateLeadDetail:
+    type: object
+    properties:
+      lead_id:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      desa_id:
+        type: string
+        format: string
+      agent_id:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      potential_field:
+        type: number
+        format: float
+      target_field:
+        type: number
+        format: float
+      number_of_farmers:
+        type: number
+        format: int32
+      status_leads:
+        type: string
+        format: string
+      additional_notes:
+        type: string
+        format: string
+      contact:
+        type: array
+        items:
+          $ref: '#/definitions/ContactLead'
+  LeadDetailCustomContact:
+    type: object
+    properties:
+      lead_id:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      desa_id:
+        type: string
+        format: string
+      agent_id:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      potential_field:
+        type: number
+        format: float
+      target_field:
+        type: number
+        format: float
+      number_of_farmers:
+        type: number
+        format: int32
+      status_leads:
+        type: string
+        format: string
+      additional_notes:
+        type: string
+        format: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+      contact:
+        type: object
+        properties:
+          name:
+            type: string
+          relationship:
+            type: string
+          address:
+            type: string
+          provinsi:
+            type: string
+          kabupaten:
+            type: string
+          kecamatan:
+            type: string
+          desa:
+            type: string
+          RW:
+            type: string
+          RT:
+            type: string
+          kodepos:
+            type: string
+          phone_number:
+            type: array
+            items:
+              type: string
   ListOfUnitPlan:
     type: array
     items:
@@ -1308,71 +1480,6 @@ definitions:
     items:
       type: integer
       format : int64
-  DataLead:
-    type: object
-    properties:
-      name:
-        type: string
-      type:
-        type: string
-      unit_id:
-        type: integer
-        format: int64
-      agent_id:
-        type: integer
-        format: int64
-      season_code:
-        type: string
-      potential_field:
-        type: number
-        format: float
-      target_field:
-        type: number
-        format: float
-      number_of_farmers:
-        type: integer
-        format: int64
-      additional_notes:
-        type: string
-      contact:
-        type: array
-        items:
-          $ref: '#/definitions/ContactLead'
-  DataUpdateLead:
-    type: object
-    properties:
-      lead_id:
-        type: integer
-        format: int32
-      name:
-        type: string
-      type:
-        type: string
-      unit_id:
-        type: integer
-        format: int64
-      agent_id:
-        type: integer
-        format: int32
-      season_code:
-        type: string
-      potential_field:
-        type: number
-        format: float
-      target_field:
-        type: number
-        format: float
-      number_of_farmers:
-        type: integer
-        format: int32
-      status_leads:
-        type: string
-      additional_notes:
-        type: string
-      contact:
-        type: array
-        items:
-          $ref: '#/definitions/ContactLead'
   ContactLead:
     type: object
     properties:
@@ -1390,9 +1497,9 @@ definitions:
         type: string
       desa:
         type: string
-      rw:
+      RW:
         type: string
-      rt:
+      RT:
         type: string
       kodepos:
         type: string
@@ -1408,8 +1515,8 @@ definitions:
         items:
           $ref: '#/definitions/LeadId'
   LeadId:
-    type: integer
-    format: int64
+    type: string
+    format: string
   AssignStatus:
     type: array
     items:
@@ -1418,8 +1525,7 @@ definitions:
     type: object
     properties:
       lead_id:
-        type: integer
-        format: int64
+        type: string
       status_leads:
         type: string
   AssignTarget:
@@ -1430,8 +1536,7 @@ definitions:
     type: object
     properties:
       lead_id:
-        type: integer
-        format: int64
+        type: string
       target_field:
         type: number
         format: float

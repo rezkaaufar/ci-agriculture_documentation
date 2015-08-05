@@ -15,6 +15,8 @@ tags:
     externalDocs:
       description: Find out more
       url: 'http://swagger.io'
+  - name: Farmer Files
+    description: Farmer file utils
 schemes:
   - http
 paths:
@@ -109,44 +111,9 @@ paths:
           description: Farmer's unit_id
           required: true
           type : string
-  /farmer/findFarmerBySeason:
-    get:
-      tags:
-        - Farmer
-      summary: Find farmer information by its season_code
-      description: Show existing farmer by its season_code
-      operationId: getFarmerBySeason
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: season_code
-          description: Farmer's season_code
-          required: true
-          type : string
       responses:
         '200':
           description: successful operation
-  /farmer/findFarmerByUnitAndSeason:
-    get:
-      tags:
-        - Farmer
-      summary: Find farmer information by its unit_id and season_code
-      description: Show existing farmer by its unit_id and season_code
-      operationId: getFarmerByUnitAndSeason
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: unit_id
-          description: Farmer's unit_id
-          required: true
-          type : string
-        - in: query
-          name: season_code
-          description: Farmer's season_code
-          required: true
-          type : string
   /farmer/insert:
     post:
       tags:
@@ -531,6 +498,30 @@ paths:
             $ref: '#/definitions/FilesPath'
         '500':
           description: internal server error
+  /farmer_id_encrypted/file_info_encrypted/identifier:
+    post:
+      tags:
+        - Farmer Files
+      summary: Upload file using multipart/form request
+      description: Upload file using multipart/form request. Readme -> http://192.168.10.188:8079/upload_readme
+      operationId: uploadFile
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: image
+          description: image to be uploaded
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successfully uploaded
+          schema:
+            $ref: '#/definitions/UploadedPath'
+        '500':
+          description: internal server error
 definitions:
   InsertFarmerGroup:
     type: object
@@ -714,7 +705,7 @@ definitions:
   FarmerContact:
     type: object
     properties:
-      name:
+      contact_name:
         type: string
         format: string
       address:
@@ -926,6 +917,12 @@ definitions:
         type: string
         format: string
       file_info_2_uploaded:
+        type: string
+        format: string
+  UploadedPath:
+    type: object
+    properties:
+      public_url:
         type: string
         format: string
 externalDocs:

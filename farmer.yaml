@@ -702,6 +702,9 @@ definitions:
       lead_name:
         type: string
         format: string
+      agent_id:
+        type: string
+        format: string
       address:
         type: string
         format: string
@@ -834,7 +837,7 @@ definitions:
       gender:
         type: string
         format: string
-      season-code:
+      season_code:
         type: string
         format: string
       unit_id:
@@ -844,6 +847,9 @@ definitions:
         type: string
         format: string
       lead_name:
+        type: string
+        format: string
+      agent_id:
         type: string
         format: string
       address:

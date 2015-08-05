@@ -46,6 +46,8 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfUnit'
         '400':
           description: Invalid status value
         '500':
@@ -68,6 +70,8 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfAgent'
         '400':
           description: Invalid status value
         '500':
@@ -667,6 +671,20 @@ paths:
           description: successful operation
         '400':
           description: Invalid status value
+  /salesLead/all:
+    get:
+      tags:
+        - Sales Leads
+      summary: All leads in database
+      description: Show all of leads in database
+      operationId: listLead
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfLeads'
   /salesLead/listLead:
     get:
       tags:
@@ -1130,13 +1148,11 @@ definitions:
       name:
         type: string
       unit_head:
-        type: integer
-        format: int64
+        type: string
       agent:
         type: array
         items:
-          type: integer
-          format: int64
+          type: string
   Season:
     type: object
     properties:
@@ -1171,6 +1187,118 @@ definitions:
     items:
       type: string
       format: string
+  ListOfAgent:
+    type: array
+    items:
+      $ref: '#/definitions/AgentDetail'
+  ListOfUnit:
+    type: array
+    items:
+      $ref: '#/definitions/UnitDetail'
+  ListOfLeads:
+    type: array
+    items:
+      $ref: '#/definitions/LeadDetail'
+  AgentDetail:
+    type: object
+    properties:
+      employee_id:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      gender:
+        type: string
+        format: string
+      birth_date:
+        type: string
+        format: string
+      address:
+        type: string
+        format: string
+      phone:
+        type: string
+        format: string
+      company:
+        type: string
+        format: string
+      email:
+        type: string
+        format: string
+      is_active:
+        type: string
+        format: string
+      role:
+        type: string
+        format: string
+  UnitDetail:
+    type: object
+    properties:
+      unit_id:
+        type: string
+        format: string
+      name:
+        type: string
+      unit_head:
+        type: string
+      agent:
+        type: array
+        items:
+          type: string
+      season:
+        type: array
+        items:
+          type: string
+  LeadDetail:
+    type: object
+    properties:
+      lead_id:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      desa_id:
+        type: string
+        format: string
+      agent_id:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      potential_field:
+        type: number
+        format: float
+      target_field:
+        type: number
+        format: float
+      number_of_farmers:
+        type: number
+        format: int32
+      status_leads:
+        type: string
+        format: string
+      additional_notes:
+        type: string
+        format: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+      contact:
+        type: array
+        items:
+          $ref: '#/definitions/ContactLead'
   ListOfUnitPlan:
     type: array
     items:
@@ -1215,7 +1343,7 @@ definitions:
     properties:
       lead_id:
         type: integer
-        format: int64
+        format: int32
       name:
         type: string
       type:
@@ -1225,7 +1353,7 @@ definitions:
         format: int64
       agent_id:
         type: integer
-        format: int64
+        format: int32
       season_code:
         type: string
       potential_field:
@@ -1236,7 +1364,7 @@ definitions:
         format: float
       number_of_farmers:
         type: integer
-        format: int64
+        format: int32
       status_leads:
         type: string
       additional_notes:
@@ -1268,14 +1396,10 @@ definitions:
         type: string
       kodepos:
         type: string
-      no_tlp:
-        type: string
-      no_hp:
+      phone_number:
         type: array
         items:
-          $ref: '#/definitions/ListHP'
-  ListHP:
-    type: string
+          type: string
   DeleteLead:
     type: object
     properties:

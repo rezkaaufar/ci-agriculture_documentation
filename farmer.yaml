@@ -447,6 +447,55 @@ paths:
           description: successful operation
         '500':
           description: internal server error
+  /farmer/upload/getUrl:
+    get:
+      tags:
+        - Farmer Files
+      summary: Get upload valid url
+      description: Get the vaild url of the endpoint to which file will be uploaded
+      operationId: getUploadUrl
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_id
+          description: Farmer's object id
+          required: true
+          type : string
+        - in: query
+          name: file_info
+          description: File information (meta)
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UploadUrl'
+        '500':
+          description: internal server error
+  /farmer/files/path:
+    get:
+      tags:
+        - Farmer Files
+      summary: Get list of farmer file paths
+      description: Get the list of farmer files path
+      operationId: getFilesPath
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_id
+          description: Farmer's object id
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation, response json fields depends on what files a farmer has
+          schema:
+            $ref: '#/definitions/FilesPath'
+        '500':
+          description: internal server error
 definitions:
   InsertFarmerGroup:
     type: object
@@ -820,6 +869,30 @@ definitions:
         items:
           type: string
           format: string
+  UploadUrl:
+    type: object
+    properties:
+      upload_url:
+        type: string
+        format: string
+  FilesPath:
+    type: object
+    properties:
+      farmer_id:
+        type: string
+        format: string
+      file_info_1:
+        type: string
+        format: string
+      file_info_1_uploaded:
+        type: string
+        format: string
+      file_info_2:
+        type: string
+        format: string
+      file_info_2_uploaded:
+        type: string
+        format: string
 externalDocs:
   description: CI - Agriculture
   url: 'http://ci-agriculture.com/'

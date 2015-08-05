@@ -30,6 +30,10 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
+        '500':
+          description: internal server error
   /farmer/findFarmer:
     get:
       tags:
@@ -48,6 +52,10 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
+        '500':
+          description: internal server error
   /farmer/re-regis:
     get:
       tags:
@@ -71,6 +79,10 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
+        '500':
+          description: internal server error
   /farmer/findFarmerByAgentAndSeason:
     get:
       tags:
@@ -94,6 +106,10 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
+        '500':
+          description: internal server error
   /farmer/findFarmerByUnit:
     get:
       tags:
@@ -109,6 +125,13 @@ paths:
           description: Farmer's unit_id
           required: true
           type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
+        '500':
+          description: internal server error
   /farmer/findFarmerBySeason:
     get:
       tags:
@@ -127,6 +150,10 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
+        '500':
+          description: internal server error
   /farmer/findFarmerByUnitAndSeason:
     get:
       tags:
@@ -147,6 +174,13 @@ paths:
           description: Farmer's season_code
           required: true
           type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
+        '500':
+          description: internal server error
   /farmer/insert:
     post:
       tags:
@@ -168,6 +202,8 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/Farmer'
         '400':
           description: bad request
         '500':
@@ -193,6 +229,8 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerPersonalDetails'
         '400':
           description: bad request
         '500':
@@ -218,11 +256,13 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerContactList'
         '400':
           description: bad request
         '500':
           description: internal server error
-  /farmer/update:
+  /farmer/updateFarmer:
     post:
       tags:
         - Farmer
@@ -243,6 +283,8 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerUpdate'
         '400':
           description: bad request
         '500':
@@ -284,6 +326,10 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerFieldUpdate'
+        '500':
+          description: internal server error
   /farmer/findFarmerField:
     get:
       tags:
@@ -302,6 +348,10 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerFieldUpdate'
+        '500':
+          description: internal server error
   /farmer/insertFarmerField:
     post:
       tags:
@@ -352,7 +402,7 @@ paths:
           description: bad request
         '500':
           description: internal server error
-  /farmer/delete:
+  /farmer/deleteFarmerField:
     post:
       tags:
         - Farmer
@@ -559,16 +609,13 @@ definitions:
   Farmer:
     type: object
     properties:
-      cif:
-        type: string
-        format: string
       name:
         type: string
         format: string
       gender:
         type: string
         format: string
-      season-code:
+      season_code:
         type: string
         format: string
       unit_id:

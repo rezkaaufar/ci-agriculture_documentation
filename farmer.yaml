@@ -291,7 +291,7 @@ paths:
           description: bad request
         '500':
           description: internal server error
-  /farmer/delete:
+  /farmer/deleteFarmer:
     post:
       tags:
         - Farmer

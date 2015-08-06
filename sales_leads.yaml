@@ -486,7 +486,7 @@ paths:
         - application/json
       parameters:
         - in: query
-          name: season code
+          name: season_code
           description: Season Code for Each Commodity
           required: true
           type: string
@@ -495,6 +495,35 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/UnitPlanWithAgentPlanning'
+        '400':
+          description: Invalid status value
+  /unitPlan/getFieldAgentDesa:
+    get:
+      tags:
+        - Unit Planning
+      summary: Find field agent desa by season_code and fieldAgentId
+      description: Returns field agent desa by season_code and fieldAgentId
+      operationId: getFieldAgentDesa
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: query
+          name: season_code
+          description: Season Code
+          required: true
+          type: string
+      parameters:
+        - in: query
+          name: fieldAgentId
+          description: field agent id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/FieldAgentDesa'
         '400':
           description: Invalid status value
   /unitPlan/getFieldLastSeason:
@@ -1540,6 +1569,11 @@ definitions:
       target_field:
         type: number
         format: float
+  FieldAgentDesa:
+    type: array
+    items:
+      type: string
+      format: string
 externalDocs:
   description: CI - Agriculture
   url: 'http://ci-agriculture.com/'

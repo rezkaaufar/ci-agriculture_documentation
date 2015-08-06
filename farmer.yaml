@@ -210,7 +210,7 @@ paths:
           description: bad request
         '500':
           description: internal server error
-  /farmer/insertFarmerPersonalDetails:
+  /farmer/updateFarmerPersonalDetails:
     post:
       tags:
         - Farmer
@@ -237,7 +237,7 @@ paths:
           description: bad request
         '500':
           description: internal server error
-  /farmer/insertFarmerContact:
+  /farmer/updateFarmerContact:
     post:
       tags:
         - Farmer

@@ -743,16 +743,34 @@ definitions:
       address:
         type: string
         format: string
+      longitude:
+        type: double
+        type: double
+      latitude:
+        type: double
+        type: double
       provinsi:
+        type: string
+        format: string
+      provinsi_location_code:
         type: string
         format: string
       kabupaten:
         type: string
         format: string
+      kabupaten_location_code:
+        type: string
+        format: string
       kecamatan:
         type: string
         format: string
+      kecamatan_location_code:
+        type: string
+        format: string
       desa:
+        type: string
+        format: string
+      desa_location_code:
         type: string
         format: string
       RW:
@@ -890,16 +908,34 @@ definitions:
       address:
         type: string
         format: string
+      longitude:
+        type: double
+        type: double
+      latitude:
+        type: double
+        type: double
       provinsi:
+        type: string
+        format: string
+      provinsi_location_code:
         type: string
         format: string
       kabupaten:
         type: string
         format: string
+      kabupaten_location_code:
+        type: string
+        format: string
       kecamatan:
         type: string
         format: string
+      kecamatan_location_code:
+        type: string
+        format: string
       desa:
+        type: string
+        format: string
+      desa_location_code:
         type: string
         format: string
       RW:
@@ -969,12 +1005,24 @@ definitions:
       field_area:
         type: integer
         format: int64
-      desa:
-        type: string
-        format: string
       kecamatan:
         type: string
         format: string
+      kecamatan_location_code:
+        type: string
+        format: string
+      desa:
+        type: string
+        format: string
+      desa_location_code:
+        type: string
+        format: string
+      longitude:
+        type: double
+        type: double
+      latitude:
+        type: double
+        type: double
       is_certified:
         type: boolean
         format: boolean
@@ -992,12 +1040,24 @@ definitions:
       field_area:
         type: integer
         format: int64
-      desa:
-        type: string
-        format: string
       kecamatan:
         type: string
         format: string
+      kecamatan_location_code:
+        type: string
+        format: string
+      desa:
+        type: string
+        format: string
+      desa_location_code:
+        type: string
+        format: string
+      longitude:
+        type: double
+        type: double
+      latitude:
+        type: double
+        type: double
       is_certified:
         type: boolean
         format: boolean

@@ -744,11 +744,11 @@ definitions:
         type: string
         format: string
       longitude:
-        type: double
-        type: double
+        type: number
+        format: double
       latitude:
-        type: double
-        type: double
+        type: number
+        format: double
       provinsi:
         type: string
         format: string
@@ -909,11 +909,11 @@ definitions:
         type: string
         format: string
       longitude:
-        type: double
-        type: double
+        type: number
+        format: double
       latitude:
-        type: double
-        type: double
+        type: number
+        format: double
       provinsi:
         type: string
         format: string
@@ -1018,11 +1018,11 @@ definitions:
         type: string
         format: string
       longitude:
-        type: double
-        type: double
+        type: number
+        format: double
       latitude:
-        type: double
-        type: double
+        type: number
+        format: double
       is_certified:
         type: boolean
         format: boolean
@@ -1053,11 +1053,11 @@ definitions:
         type: string
         format: string
       longitude:
-        type: double
-        type: double
+        type: number
+        format: double
       latitude:
-        type: double
-        type: double
+        type: number
+        format: double
       is_certified:
         type: boolean
         format: boolean

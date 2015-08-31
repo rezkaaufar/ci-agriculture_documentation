@@ -1,0 +1,1034 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: IFM
+basePath: /v2
+tags:
+  - name: Master
+    description: Information about Master Inventory and Master Loan
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Group Preferences
+    description: Information about Group preferences
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Input Plan
+    description: Information about Input Planning
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Farmer Loan
+    description: Information about loans of farmer
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+schemes:
+  - http
+paths:
+  /master/loan/allType:
+    get:
+      tags:
+        - Master
+      summary: List of all type of loans
+      description: Show all type of loans in database
+      operationId: listLoanType
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofLoanTypes'
+  /master/loan/findAllowingLoan:
+    get:
+      tags:
+        - Master
+      summary: Show allowing loan for determine loan and farmer's data
+      description: Search information of allowing loan for a farmer
+      operationId: getLoanInformation
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: loan_type
+          description: Loan type that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: farmer_id
+          description: Farmer id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: unit_id
+          description: Unit id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Season code that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/LoanInformation'
+        '400':
+          description: invalid value of parameters
+  /master/inventory/all:
+    get:
+      tags:
+        - Master
+      summary: List of all inventories in database
+      description: Show all inventories in database
+      operationId: listInventory
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofInventories'
+  /master/inventory/findSubBrandBySubCategory:
+    get:
+      tags:
+        - Master
+      summary: Find Sub Brand of inventory by sub category
+      description: Search list of sub brand by sub category
+      operationId: listSubBrandBySubCategory
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: sub_category
+          description: Sub category that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListSubBrand'
+        '400':
+          description: invalid value of parameters
+  /master/inventory/findInventoryBySubCategory:
+    get:
+      tags:
+        - Master
+      summary: Find inventories information by sub category
+      description: Search list of inventories by sub category
+      operationId: listInventoryBySubCategory
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: sub_category
+          description: Sub category that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofInventories'
+        '400':
+          description: invalid value of parameters
+  /inputPlan/preference/all:
+    get:
+      tags:
+        - Group Preferences
+      summary: List of all preferences of all groups
+      description: Show all preferences in database
+      operationId: listAllPreferences
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofGroupPreferences'
+  /inputPlan/preference/findByUnitandSeason:
+    get:
+      tags:
+        - Group Preferences
+      summary: Find group preferences by unit_id or season_code
+      description: Search list of group preferences by unit id or season code
+      operationId: listPreferencesByUnitandSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: Unit id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Season code that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofGroupPreferences'
+        '400':
+          description: invalid value of parameters
+  /inputPlan/preference/findByAgentandSeason:
+    get:
+      tags:
+        - Group Preferences
+      summary: Find group preferences by agent_id and season_code
+      description: Search list of group preferences by unit id and season code
+      operationId: listPreferencesByAgentandSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: agent_id
+          description: Agent id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Season code that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofGroupPreferences'
+  /inputPlan/preference/save:
+    post:
+      tags:
+        - Group Preferences
+      summary: Create or update group preferences and its input planning
+      description: Create or update group preferences in existing farmer group
+      operationId: savePreferences
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Json containing information of Group Preferences
+        required: true
+        schema:
+          $ref: '#/definitions/SaveGroupPreferences'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/GroupPreferences'
+        '400':
+          description: bad request or inventory not found
+        '500':
+          description: internal server error
+  /inputPlan/preference/delete:
+    post:
+      tags:
+        - Group Preferences
+      summary: Delete existing Group Preferences and its input planning
+      description: Delete existing Group Preferences and its input planning
+      operationId: deletePreferences
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing list of farmer's group object id
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteGroupPreferences'
+      responses:
+        '200':
+          description: successful operation
+        '500':
+          description: internal server error
+  /inputPlan/all:
+    get:
+      tags:
+        - Input Plan
+      summary: List of all input plan in datbase
+      description: Show all input plan in database
+      operationId: listInputPlanning
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofInputPlan'
+  /inputPlan/findPlanByUnitandSeason:
+    get:
+      tags:
+        - Input Plan
+      summary: Find input plan by unit_id or season_code
+      description: Search list of input plan by unit id or season code
+      operationId: listInputPlanningByUnitandSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: Unit id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Season code that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofInputPlan'
+        '400':
+          description: invalid value of parameters
+  /inputPlan/findPlanByAgentandSeason:
+    get:
+      tags:
+        - Input Plan
+      summary: Find input plan by agent_id and season_code
+      description: Search list of input plan by agent id and season code
+      operationId: listInputPlanningByAgentandSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: agent_id
+          description: Agent id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Season code that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofInputPlan'
+  /inputPlan/findPlanById:
+    get:
+      tags:
+        - Input Plan
+      summary: Find input plan by input_plan_id
+      description: Search input plan by its id
+      operationId: listInputPlanningById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: input_plan_id
+          description: id that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/InputPlan'
+        '400':
+          description: bad request
+  /inputPlan/update:
+    post:
+      tags:
+        - Input Plan
+      summary: Update existing Input Plan
+      description: Update existing Input Plan  
+      operationId: updateInputPlanning
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Json containing information of Input Plan
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateInputPlan'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/InputPlan'
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /inputPlan/assignStatus:
+    post:
+      tags:
+        - Input Plan
+      summary: Assign status to existing Input Plan
+      description: Assign status to existing Input Plan  
+      operationId: assignStatus
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Json containing information of Input Plan
+        required: true
+        schema:
+          $ref: '#/definitions/AssignStatusInputPlans'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /inputPlan/delete:
+    post:
+      tags:
+        - Input Plan
+      summary: Delete existing input planning
+      description: Delete existing input planning
+      operationId: deleteInputPlanning
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing list of input planning id
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteInputPlan'
+      responses:
+        '200':
+          description: successful operation
+        '500':
+          description: internal server error
+  /loan/all:
+    get:
+      tags:
+        - Farmer Loan
+      summary: List of all loans in datbase
+      description: Show all loans in database
+      operationId: listFarmerLoan
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofLoans'
+  /loan/findLoanByUnitandSeason:
+    get:
+      tags:
+        - Farmer Loan
+      summary: Find farmer's loan by unit_id or season_code
+      description: Search list of loans by unit id or season code
+      operationId: listLoanByUnitandSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: Unit id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Season code that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofLoans'
+        '400':
+          description: invalid value of parameters
+  /loan/findLoanByAgentandSeason:
+    get:
+      tags:
+        - Farmer Loan
+      summary: Find farmer's loan by agent_id and season_code
+      description: Search list of loans by agent id and season code
+      operationId: listLoanByAgentandSeason
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: agent_id
+          description: Agent id that need to be considered for search
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: Season code that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListofLoans'
+  /loan/findLoanById:
+    get:
+      tags:
+        - Farmer Loan
+      summary: Find farmer's loan by farmer_loan_id
+      description: Search loan by its id
+      operationId: loanById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_loan_id
+          description: id that need to be considered for search
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Loan'
+        '404':
+          description: not found
+  /loan/insert:
+    post:
+      tags:
+        - Farmer Loan
+      summary: Create new Loan
+      description: Create new Loan  
+      operationId: insertLoan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Json containing information of Loan
+        required: true
+        schema:
+          $ref: '#/definitions/InsertLoan'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Loan'
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /loan/update:
+    post:
+      tags:
+        - Farmer Loan
+      summary: Update existing Loan
+      description: Update existing Loan  
+      operationId: updateLoan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Json containing information of Loan
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateLoan'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Loan'
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /loan/assignStatus:
+    post:
+      tags:
+        - Farmer Loan
+      summary: Assign status to existing loan
+      description: Assign status to existing loan  
+      operationId: assignStatusLoan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Json containing information of Loan
+        required: true
+        schema:
+          $ref: '#/definitions/AssignStatusLoan'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+  /loan/delete:
+    post:
+      tags:
+        - Farmer Loan
+      summary: Delete existing farmer's loan
+      description: Delete existing farmer's loan
+      operationId: deleteLoan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing list of loan's id
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteLoans'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '500':
+          description: internal server error
+definitions:
+  ListSubBrand:
+    type: array
+    items:
+      type: string
+      format: string
+  LoanInformation:
+    type: object
+    properties:
+      loan_type:
+        type: string
+        format: string
+      farmer_id:
+        type: string
+        format: string
+      loan_period:
+        type: integer
+        format: int64
+      loan_limit:
+        type: number
+        format: double
+      admin_percentage:
+        type: number
+        format: float
+  ListofLoanTypes:
+    type: array
+    items:
+      type: string
+      format: string
+  ListofInventories:
+    type: array
+    items:
+      $ref: '#/definitions/Inventory'
+  Inventory:
+    type: object
+    properties:
+      inventory_id:
+        type: string
+        format: string
+      inventory_code:
+        type: string
+        format: string
+      sku:
+        type: string
+        format: string
+      sub_brand:
+        type: string
+        format: string
+      brand:
+        type: string
+        format: string
+      manufacture:
+        type: string
+        format: string
+      sub_category:
+        type: string
+        format: string
+      category:
+        type: string
+        format: string
+      satuan:
+        type: string
+        format: string
+      needs_per_ha:
+        type: integer
+        format: int64
+  ListofGroupPreferences:
+    type: array
+    items:
+      $ref: '#/definitions/GroupPreferences'
+  GroupPreferences:
+    type: object
+    properties:
+      farmer_group_id:
+        type: string
+        format: string
+      name:
+        type: string
+        format: string
+      season_code:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      leader_id:
+        type: string
+        format: string
+      farmer_id:
+        type: array
+        items:
+          type: string
+          format: string
+      preferences:
+        type: array
+        items:
+          $ref: '#/definitions/Preferences'
+      additional_notes:
+        type: string
+        format: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+  Preferences:
+    type: object
+    properties:
+      sub_category:
+        type: string
+        format: string
+      sub_brand:
+        type: string
+        format: string
+  SaveGroupPreferences:
+    type: object
+    properties:
+      farmer_group_id:
+        type: string
+        format: string
+      preferences:
+        type: array
+        items:
+          $ref: '#/definitions/Preferences'
+  DeleteGroupPreferences:
+    type: object
+    properties:
+      farmer_group_id:
+        type: array
+        items:
+          type: string
+          format: string
+  ListofInputPlan:
+    type: array
+    items:
+      $ref: '#/definitions/InputPlan'
+  InputPlan:
+    type: object
+    properties:
+      input_plan_id:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      season_code:
+        type: string
+        format: string
+      farmer_group_id:
+        type: string
+        format: string
+      farmer_id:
+        type: string
+        format: string
+      cif:
+        type: string
+        format: string
+      total_field:
+        type: number
+        format: float
+      total_price:
+        type: number
+        format: double
+      maximum_loan:
+        type: number
+        format: double
+      status:
+        type: integer
+        format: int64
+      inventory_request:
+        type: array
+        items:
+          $ref: '#/definitions/RequestInventory'
+      additional_notes:
+        type: string
+        format: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+  RequestInventory:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int64
+      inventory_code:
+        type: string
+        format: string
+      sku:
+        type: string
+        format: string
+      sub_brand:
+        type: string
+        format: string
+      sub_category:
+        type: string
+        format: string
+      price:
+        type: number
+        format: double
+  UpdateInputPlan:
+    type: object
+    properties:
+      input_plan_id: 
+        type: string
+        format: string
+      farmer_group_id:
+        type: string
+        format: string
+      farmer_id:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      season_code:
+        type: string
+        format: string
+      inventory_request:
+        type: array
+        items:
+          $ref: '#/definitions/UpdateRequestInventory'
+      additional_notes:
+        type: string
+        format: string
+  UpdateRequestInventory:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int64
+      inventory_code:
+        type: string
+        format: string
+      sku:
+        type: string
+        format: string
+      sub_brand:
+        type: string
+        format: string
+      sub_category:
+        type: string
+        format: string
+  AssignStatusInputPlans:
+    type: array
+    items:
+      $ref: '#/definitions/AssignStatusInputPlan'
+  AssignStatusInputPlan:
+    type: object
+    properties:
+      input_plan_id:
+        type: string
+        format: string
+      status:
+        type: integer
+        format: int64
+  DeleteInputPlan:
+    type: object
+    properties:
+      input_plan_id:
+        type: array
+        items:
+          type: string
+          format: string
+  ListofLoans:
+    type: array
+    items:
+      $ref: '#/definitions/Loan'
+  Loan:
+    type: object
+    properties:
+      farmer_loan_id:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      season_code:
+        type: string
+        format: string
+      farmer_group_id:
+        type: string
+        format: string
+      farmer_id:
+        type: string
+        format: string
+      cif:
+        type: string
+        format: string
+      farmer_name:
+        type: string
+        format: string
+      total_field:
+        type: number
+        format: float
+      loan_type:
+        type: string
+        format: string
+      loan_period:
+        type: integer
+        format: int64
+      loan_limit:
+        type: number
+        format: double
+      credits:
+        type: number
+        format: double
+      admin_fee:
+        type: number
+        format: double
+      total_credits:
+        type: number
+        format: double
+      loan_status:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+  InsertLoan:
+    type: object
+    properties:
+      unit_id:
+        type: string
+        format: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      season_code:
+        type: string
+        format: string
+      farmer_group_id:
+        type: string
+        format: string
+      farmer_id:
+        type: string
+        format: string
+      loan_type:
+        type: string
+        format: string
+      credits:
+        type: number
+        format: double
+  UpdateLoan:
+    type: object
+    properties:
+      farmer_loan_id:
+        type: string
+        format: string
+      unit_id:
+        type: string
+        format: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      season_code:
+        type: string
+        format: string
+      farmer_group_id:
+        type: string
+        format: string
+      farmer_id:
+        type: string
+        format: string
+      loan_type:
+        type: string
+        format: string
+      credits:
+        type: number
+        format: double
+  AssignStatusLoan:
+    type: object
+    properties:
+      farmer_loan_id:
+        type: string
+        format: string
+      loan_status:
+        type: integer
+        format: int64
+  DeleteLoans:
+    type: object
+    properties:
+      farmer_loan_id:
+        type: array
+        items:
+          type: string
+          format: string
+externalDocs:
+  description: CI - Agriculture
+  url: 'http://ci-agriculture.com/'

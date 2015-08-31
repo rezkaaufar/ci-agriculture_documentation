@@ -1144,6 +1144,12 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/FarmerInFarmerGroup'
+      total_farmer:
+        type: integer
+        format: int64
+      total_group_field:
+        type: number
+        format: float
       additional_notes:
         type: string
         format: string

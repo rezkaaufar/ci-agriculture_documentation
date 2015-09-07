@@ -19,8 +19,13 @@ tags:
     description: Information about Input Planning
     externalDocs:
       description: Find out more
-      url: 'http://swagger.io'
+      url: 'http://swagger.io' 
   - name: Farmer Loan
+    description: Information about loans of farmer
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Farmer Distribution
     description: Information about loans of farmer
     externalDocs:
       description: Find out more
@@ -93,6 +98,34 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/ListofInventories'
+  /master/inventory/findAllSubcategory:
+    get:
+      tags:
+        - Master
+      summary: List of all subcategory available in the database
+      description: List of all subcategory available in the database
+      operationId: listSubcategory
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfSubcategories'
+  /master/inventory/findAllSubcategoryAndSubBrand:
+      get:
+      tags:
+        - Master
+      summary: List of all subcategory and all subbrands it consist of
+      description: List of all subcategory and all subbrands it consist of
+      operationId: listSubcategoryAndSubBrands
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ListOfSubcategoriesAndSubBrands'
   /master/inventory/findSubBrandBySubCategory:
     get:
       tags:
@@ -608,7 +641,896 @@ paths:
           description: bad request
         '500':
           description: internal server error
+  /distribution/allStock:
+    get:
+      tags:
+        - Farmer Distribution
+      summary: Find all existing stock card
+      description: Find all existing stock card
+      operationId: findAllStock
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/StockCard'
+        '404':
+          description: not found
+  /distribution/findStockCardById:
+    get:
+      tags:
+        - Farmer Distribution
+      summary: Find stock card by id
+      description: Find stock card by id
+      operationId: findStockById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: stock_id
+          description: stock id for particular stock card
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/StockCard'
+        '404':
+          description: not found
+  /distribution/insertStockCard:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Insert new stock card to database
+      description: Insert new stock card to database
+      operationId: insertStockCard
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of Stock Card
+          required: true
+          schema:
+            $ref: '#/definitions/InsertStockCard'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/StockCard'
+        '404':
+          description: not found
+  /distribution/allReceived:
+    get:
+      tags:
+        - Farmer Distribution
+      summary: Find all existing received inventory
+      description: Find all existing received inventory
+      operationId: findAllReceived
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ReceivedInventory'
+        '404':
+          description: not found
+  /distribution/findReceivedById:
+    get:
+      tags:
+        - Farmer Distribution
+      summary: Find received inventory by its Id
+      description: Find received inventory by its Id
+      operationId: findReceivedById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: received_id
+          description: received id for particular received inventory
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ReceivedInventory'
+        '404':
+          description: not found
+  /distribution/insertReceivedInventory:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Insert new received inventory to database
+      description: Insert new received inventory to database
+      operationId: insertReceivedInventory
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of Received Inventory
+          required: true
+          schema:
+            $ref: '#/definitions/InsertReceivedInventory'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ReceivedInventory'
+        '404':
+          description: not found
+  /distribution/updateReceivedInventory:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Update existing received inventory
+      description: Update existing received inventory
+      operationId: updateReceivedInventory
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of Received Inventory
+          required: true
+          schema:
+            $ref: '#/definitions/ReceivedInventory'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ReceivedInventory'
+        '404':
+          description: not found
+  /distribution/deleteReceivedInventory:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Delete existing received inventory
+      description: Delete existing received inventory
+      operationId: deleteReceivedInventory
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing arrayList of String of ReceivedInventory Id
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteReceivedInventory'
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: not found
+  /distribution/allPicklist:
+    get:
+      tags:
+        - Farmer Distribution
+      summary: Find all existing picklist transaction
+      description: Find all existing picklist transaction
+      operationId: findAllPicklist
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PicklistTransaction'
+        '404':
+          description: not found
+  /distribution/findPicklistById:
+    get:
+      tags:
+        - Farmer Distribution
+      summary: Find picklist transaction by its Id
+      description: Find picklist transaction by its Id
+      operationId: findPicklistById
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: picklist_id
+          description: picklist id for particular picklist transaction
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PicklistTransaction'
+        '404':
+          description: not found
+  /distribution/insertPicklistTransaction:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Insert new picklist transaction to database
+      description: Insert new picklist transaction to database
+      operationId: insertPicklistTransaction
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of Picklist Transaction
+          required: true
+          schema:
+            $ref: '#/definitions/InsertPicklistTransaction'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PicklistTranscation'
+        '404':
+          description: not found
+  /distribution/updatePicklistTransaction:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Update existing picklist transaction
+      description: Update existing picklist transaction
+      operationId: updatePicklistTransaction
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of Picklist Transaction
+          required: true
+          schema:
+            $ref: '#/definitions/PicklistTransaction'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PicklistTransaction'
+        '404':
+          description: not found
+  /distribution/deletePicklistTransaction:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Delete existing picklist transaction
+      description: Delete existing picklist transaction
+      operationId: deletePicklistTransaction
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing arrayList of String of PicklistTransaction Id
+          required: true
+          schema:
+            $ref: '#/definitions/DeletePicklistTransaction'
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: not found
+  /distribution/InsertPickLog:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Insert new PickLog to database
+      description: Insert new PickLog to database
+      operationId: insertPickLog
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of PickLog
+          required: true
+          schema:
+            $ref: '#/definitions/InsertPickLog'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PickLog'
+        '404':
+          description: not found
+  /distribution/updatePickLog:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Update existing PickLog
+      description: Update existing PickLog
+      operationId: updatePickLog
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of PickLog
+          required: true
+          schema:
+            $ref: '#/definitions/PickLog'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PickLog'
+        '404':
+          description: not found
+  /distribution/deletePickLog:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Delete existing PickLog
+      description: Delete existing PickLog
+      operationId: deletePickLog
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing arrayList of String of PickLog Id
+          required: true
+          schema:
+            $ref: '#/definitions/DeletePickLog'
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: not found
+  /distribution/insertFarmerDistribution:
+    post:
+      tags:
+        - Farmer Distribution
+      summary: Insert new Farmer Distribution to database
+      description: Insert new Farmer Distribution to database
+      operationId: insertFarmerDistribution
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Json containing information of Farmer Distribution
+          required: true
+          schema:
+            $ref: '#/definitions/insertFarmerDistribution'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerDistribution'
+        '404':
+          description: not found
+  /distribution/getFarmerGroupDistribution:
+    get:
+      tags:
+        - Farmer Distribution
+      summary: Find the status of farmer group distribution by unit_id and season_code
+      description: Find the status of farmer group distribution by unit_id and season_code
+      operationId: getFarmerGroupDistribution
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: unit_id for particular unit_id
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: season_code for particular seasons
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/FarmerGroupDistribution'
+        '404':
+          description: not found
+  /distribution/reset:
+    get:
+      tags:
+        - Farmer Distribution
+      summary: Reset Distribution
+      description: Reset Distribution
+      operationId: resetDistribution
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          description: unit_id for particular unit_id
+          required: true
+          type : string
+        - in: query
+          name: season_code
+          description: season_code for particular seasons
+          required: true
+          type : string
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: not found
 definitions:
+  FarmerGroupDistribution:
+    type: array
+    properties:
+      type: object
+      properties:
+        farmer_group_id:
+          items: string
+          type: string
+        distribution_percentage:
+          items: double
+          type: double
+        farmer_group_name:
+          items: string
+          type: string
+  FarmerDistribution:
+    type: object
+    properties:
+      farmer_dist_id:
+        items: string
+        type: string
+      unit_id:
+        items: string
+        type: string
+      season_code:
+        items: string
+        type: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_group_id:
+        items: string
+        type: string
+      leader_id:
+        items: string
+        type: string
+      farmer_id:
+        items: string
+        type: string
+      farmer_cif:
+        items: string
+        type: string
+      sub_brand:
+        items: string
+        type: string
+      sub_category:
+        items: string
+        type: string
+      inventory_code:
+        items: string
+        type: string
+      demand:
+        items: double
+        type: double
+      picked:
+        items: double
+        type: double
+      unpicked:
+        items: double
+        type: double
+      retur:
+        items: double
+        type: double
+      created_at:
+        items: string
+        type: date
+      updated_at:
+        items: string
+        type: date
+  InsertFarmerDistribution:
+    type: object
+    properties:
+      unit_id:
+        items: string
+        type: string
+      season_code:
+        items: string
+        type: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_group_id:
+        items: string
+        type: string
+      leader_id:
+        items: string
+        type: string
+      farmer_id:
+        items: string
+        type: string
+      farmer_cif:
+        items: string
+        type: string
+      sub_brand:
+        items: string
+        type: string
+      sub_category:
+        items: string
+        type: string
+      inventory_code:
+        items: string
+        type: string
+      demand:
+        items: double
+        type: double
+      picked:
+        items: double
+        type: double
+      unpicked:
+        items: double
+        type: double
+      retur:
+        items: double
+        type: double
+  PickLog:
+    type: object
+    properties:
+      picklog_id:
+        items: string
+        type: string
+      picklist_id:
+        items: string
+        type: string
+      farmer_cif:
+        items: string
+        type: string
+      date_picked:
+        items: string
+        type: date
+      amount_picked:
+        items: double
+        type: double
+      created_at:
+        items: string
+        type: date
+      updated_at:
+        items: string
+        type: date
+  InsertPickLog:
+    type: object
+    properties:
+      picklist_id:
+        items: string
+        type: string
+      farmer_cif:
+        items: string
+        type: string
+      date_picked:
+        items: string
+        type: date
+      amount_picked:
+        items: double
+        type: double
+  DeletePickLog:
+    type: object
+    properties:
+      picklog_id:
+        type: array
+        items:
+          type: string
+          format: string
+  PicklistTransaction:
+    type: object
+    properties:
+      picklist_id:
+        items: string
+        type: string
+      unit_id:
+        items: string
+        type: string
+      season_code:
+        items: string
+        type: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_group_id:
+        items: string
+        type: string
+      leader_id:
+        items: string
+        type: string
+      farmer_name:
+        items: string
+        type: string
+      farmer_cif:
+        items: string
+        type: string
+      sub_brand:
+        items: string
+        type: string
+      sub_category:
+        items: string
+        type: string
+      inventory_code:
+        items: string
+        type: string
+      demand:
+        items: double
+        type: double
+      picked:
+        items: double
+        type: double
+      retur:
+        items: double
+        type: double
+      balance:
+        items: double
+        type: double
+      pick_log:
+        type: array
+        items:
+          type: string
+          format: string
+      created_at:
+        items: string
+        type: date
+      updated_at:
+        items: string
+        type: date
+  InsertPicklistTransaction:
+    type: object
+    properties:
+      unit_id:
+        items: string
+        type: string
+      season_code:
+        items: string
+        type: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_group_id:
+        items: string
+        type: string
+      leader_id:
+        items: string
+        type: string
+      farmer_name:
+        items: string
+        type: string
+      farmer_cif:
+        items: string
+        type: string
+      sub_brand:
+        items: string
+        type: string
+      sub_category:
+        items: string
+        type: string
+      inventory_code:
+        items: string
+        type: string
+      demand:
+        items: double
+        type: double
+      picked:
+        items: double
+        type: double
+      retur:
+        items: double
+        type: double
+      balance:
+        items: double
+        type: double
+  DeletePicklistTransaction:
+    type: object
+    properties:
+      picklist_id:
+        type: array
+        items:
+          type: string
+          format: string
+  ReceivedInventory:
+    type: object
+    properties:
+      received_id:
+        items: string
+        type: string
+      unit_id:
+        items: string
+        type: string
+      season_code:
+        items: string
+        type: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_group_id:
+        items: string
+        type: string
+      leader_id:
+        items: string
+        type: string
+      sub_brand:
+        items: string
+        type: string
+      sub_category:
+        items: string
+        type: string
+      inventory_code:
+        items: string
+        type: string
+      received_date:
+        items: string
+        type: date
+      amount_received:
+        items: double
+        type: double
+      document_type:
+        items: string
+        type: string
+      document_number:
+        items: string
+        type: string
+      price:
+        items: double
+        type: double
+      created_at:
+        items: string
+        type: date
+      updated_at:
+        items: string
+        type: date
+  InsertReceivedInventory:
+    type: object
+    properties:
+      unit_id:
+        items: string
+        type: string
+      season_code:
+        items: string
+        type: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_group_id:
+        items: string
+        type: string
+      leader_id:
+        items: string
+        type: string
+      sub_brand:
+        items: string
+        type: string
+      sub_category:
+        items: string
+        type: string
+      inventory_code:
+        items: string
+        type: string
+      received_date:
+        items: string
+        type: date
+      amount_received:
+        items: double
+        type: double
+      document_type:
+        items: string
+        type: string
+      document_number:
+        items: string
+        type: string
+      price:
+        items: double
+        type: double
+  DeleteReceivedInventory:
+    type: object
+    properties:
+      received_id:
+        type: array
+        items:
+          type: string
+          format: string
+  StockCard:
+    type: object
+    properties:
+      stock_id:
+        items: string
+        type: string
+      unit_id:
+        items: string
+        type: string
+      season_code:
+        items: string
+        type: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_group_id:
+        items: string
+        type: string
+      leader_id:
+        items: string
+        type: string
+      sub_brand:
+        items: string
+        type: string
+      sub_category:
+        items: string
+        type: string
+      inventory_code:
+        items: string
+        type: string
+      demand:
+        items: double
+        type: double
+      stock:
+        items: double
+        type: double
+      received:
+        items: double
+        type: double
+      picked:
+        items: double
+        type: double
+      created_at:
+        items: string
+        type: date
+      updated_at:
+        items: string
+        type: date
+  InsertStockCard:
+    type: object
+    properties:
+      unit_id:
+        items: string
+        type: string
+      season_code:
+        items: string
+        type: string
+      agent_id:
+        type: array
+        items:
+          type: string
+          format: string
+      farmer_group_id:
+        items: string
+        type: string
+      leader_id:
+        items: string
+        type: string
+      sub_brand:
+        items: string
+        type: string
+      sub_category:
+        items: string
+        type: string
+      inventory_code:
+        items: string
+        type: string
+      demand:
+        items: double
+        type: double
+      stock:
+        items: double
+        type: double
+      received:
+        items: double
+        type: double
+      picked:
+        items: double
+        type: double
   ListSubBrand:
     type: array
     items:
@@ -637,6 +1559,28 @@ definitions:
     items:
       type: string
       format: string
+  ListOfSubcategoriesAndSubBrands:
+    type: array
+    items:
+      $ref: '#/definitions/Subcategory_item'
+  Subcategory_item:
+    type: object
+    properties:
+      sub_category:
+        type: string
+        format: string
+      sub_brands:
+        type: array
+        items:
+          type: string
+          format: string
+  ListOfSubcategories:
+    type: array
+    items:
+      $ref: '#/definitions/Subcategory_name'
+  Subcategory_name:
+    type: string
+    format: string
   ListofInventories:
     type: array
     items:

@@ -113,7 +113,7 @@ paths:
           schema:
             $ref: '#/definitions/ListOfSubcategories'
   /master/inventory/findAllSubcategoryAndSubBrand:
-      get:
+    get:
       tags:
         - Master
       summary: List of all subcategory and all subbrands it consist of
@@ -865,7 +865,7 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/PicklistTranscation'
+            $ref: '#/definitions/PicklistTransaction'
         '404':
           description: not found
   /distribution/updatePicklistTransaction:
@@ -994,7 +994,7 @@ paths:
           description: Json containing information of Farmer Distribution
           required: true
           schema:
-            $ref: '#/definitions/insertFarmerDistribution'
+            $ref: '#/definitions/InsertFarmerDistribution'
       responses:
         '200':
           description: successful operation
@@ -1057,160 +1057,160 @@ paths:
 definitions:
   FarmerGroupDistribution:
     type: array
-    properties:
+    items:
       type: object
       properties:
         farmer_group_id:
-          items: string
           type: string
+          format: string
         distribution_percentage:
-          items: double
-          type: double
+          type: number
+          format: double
         farmer_group_name:
-          items: string
           type: string
+          format: string
   FarmerDistribution:
     type: object
     properties:
       farmer_dist_id:
-        items: string
         type: string
+        format: string
       unit_id:
-        items: string
         type: string
+        format: string
       season_code:
-        items: string
         type: string
+        format: string
       agent_id:
         type: array
         items:
           type: string
           format: string
       farmer_group_id:
-        items: string
         type: string
+        format: string
       leader_id:
-        items: string
         type: string
+        format: string
       farmer_id:
-        items: string
         type: string
+        format: string
       farmer_cif:
-        items: string
         type: string
+        format: string
       sub_brand:
-        items: string
         type: string
+        format: string
       sub_category:
-        items: string
         type: string
+        format: string
       inventory_code:
-        items: string
         type: string
+        format: string
       demand:
-        items: double
-        type: double
+        type: number
+        format: double
       picked:
-        items: double
-        type: double
+        type: number
+        format: double
       unpicked:
-        items: double
-        type: double
+        type: number
+        format: double
       retur:
-        items: double
-        type: double
+        type: number
+        format: double
       created_at:
-        items: string
-        type: date
+        type: string
+        format: date
       updated_at:
-        items: string
-        type: date
+        type: string
+        format: date
   InsertFarmerDistribution:
     type: object
     properties:
       unit_id:
-        items: string
         type: string
+        format: string
       season_code:
-        items: string
         type: string
+        format: string
       agent_id:
         type: array
         items:
           type: string
           format: string
       farmer_group_id:
-        items: string
         type: string
+        format: string
       leader_id:
-        items: string
         type: string
+        format: string
       farmer_id:
-        items: string
         type: string
+        format: string
       farmer_cif:
-        items: string
         type: string
+        format: string
       sub_brand:
-        items: string
         type: string
+        format: string
       sub_category:
-        items: string
         type: string
+        format: string
       inventory_code:
-        items: string
         type: string
+        format: string
       demand:
-        items: double
-        type: double
+        type: number
+        format: double
       picked:
-        items: double
-        type: double
+        type: number
+        format: double
       unpicked:
-        items: double
-        type: double
+        type: number
+        format: double
       retur:
-        items: double
-        type: double
+        type: number
+        format: double
   PickLog:
     type: object
     properties:
       picklog_id:
-        items: string
         type: string
+        format: string
       picklist_id:
-        items: string
         type: string
+        format: string
       farmer_cif:
-        items: string
         type: string
+        format: string
       date_picked:
-        items: string
-        type: date
+        type: string
+        format: date
       amount_picked:
-        items: double
-        type: double
+        type: number
+        format: double
       created_at:
-        items: string
-        type: date
+        type: string
+        format: date
       updated_at:
-        items: string
-        type: date
+        type: string
+        format: date
   InsertPickLog:
     type: object
     properties:
       picklist_id:
-        items: string
         type: string
+        format: string
       farmer_cif:
-        items: string
         type: string
+        format: string
       date_picked:
-        items: string
-        type: date
+        type: string
+        format: date
       amount_picked:
-        items: double
-        type: double
+        type: number
+        format: double
   DeletePickLog:
     type: object
     properties:
@@ -1223,110 +1223,110 @@ definitions:
     type: object
     properties:
       picklist_id:
-        items: string
         type: string
+        format: string
       unit_id:
-        items: string
         type: string
+        format: string
       season_code:
-        items: string
         type: string
+        format: string
       agent_id:
         type: array
         items:
           type: string
           format: string
       farmer_group_id:
-        items: string
         type: string
+        format: string
       leader_id:
-        items: string
         type: string
+        format: string
       farmer_name:
-        items: string
         type: string
+        format: string
       farmer_cif:
-        items: string
         type: string
+        format: string
       sub_brand:
-        items: string
         type: string
+        format: string
       sub_category:
-        items: string
         type: string
+        format: string
       inventory_code:
-        items: string
         type: string
+        format: string
       demand:
-        items: double
-        type: double
+        type: number
+        format: double
       picked:
-        items: double
-        type: double
+        type: number
+        format: double
       retur:
-        items: double
-        type: double
+        type: number
+        format: double
       balance:
-        items: double
-        type: double
+        type: number
+        format: double
       pick_log:
         type: array
         items:
           type: string
           format: string
       created_at:
-        items: string
-        type: date
+        type: string
+        format: date
       updated_at:
-        items: string
-        type: date
+        type: string
+        format: date
   InsertPicklistTransaction:
     type: object
     properties:
       unit_id:
-        items: string
         type: string
+        format: string
       season_code:
-        items: string
         type: string
+        format: string
       agent_id:
         type: array
         items:
           type: string
           format: string
       farmer_group_id:
-        items: string
         type: string
+        format: string
       leader_id:
-        items: string
         type: string
+        format: string
       farmer_name:
-        items: string
         type: string
+        format: string
       farmer_cif:
-        items: string
         type: string
+        format: string
       sub_brand:
-        items: string
         type: string
+        format: string
       sub_category:
-        items: string
         type: string
+        format: string
       inventory_code:
-        items: string
         type: string
+        format: string
       demand:
-        items: double
-        type: double
+        type: number
+        format: double
       picked:
-        items: double
-        type: double
+        type: number
+        format: double
       retur:
-        items: double
-        type: double
+        type: number
+        format: double
       balance:
-        items: double
-        type: double
+        type: number
+        format: double
   DeletePicklistTransaction:
     type: object
     properties:
@@ -1339,99 +1339,99 @@ definitions:
     type: object
     properties:
       received_id:
-        items: string
         type: string
+        format: string
       unit_id:
-        items: string
         type: string
+        format: string
       season_code:
-        items: string
         type: string
+        format: string
       agent_id:
         type: array
         items:
           type: string
           format: string
       farmer_group_id:
-        items: string
         type: string
+        format: string
       leader_id:
-        items: string
         type: string
+        format: string
       sub_brand:
-        items: string
         type: string
+        format: string
       sub_category:
-        items: string
         type: string
+        format: string
       inventory_code:
-        items: string
         type: string
+        format: string
       received_date:
-        items: string
-        type: date
+        type: string
+        format: date
       amount_received:
-        items: double
-        type: double
+        type: number
+        format: double
       document_type:
-        items: string
         type: string
+        format: string
       document_number:
-        items: string
         type: string
+        format: string
       price:
-        items: double
-        type: double
+        type: number
+        format: double
       created_at:
-        items: string
-        type: date
+        type: string
+        format: date
       updated_at:
-        items: string
-        type: date
+        type: string
+        format: date
   InsertReceivedInventory:
     type: object
     properties:
       unit_id:
-        items: string
         type: string
+        format: string
       season_code:
-        items: string
         type: string
+        format: string
       agent_id:
         type: array
         items:
           type: string
           format: string
       farmer_group_id:
-        items: string
         type: string
+        format: string
       leader_id:
-        items: string
         type: string
+        format: string
       sub_brand:
-        items: string
         type: string
+        format: string
       sub_category:
-        items: string
         type: string
+        format: string
       inventory_code:
-        items: string
         type: string
+        format: string
       received_date:
-        items: string
-        type: date
+        type: string
+        format: date
       amount_received:
-        items: double
-        type: double
+        type: number
+        format: double
       document_type:
-        items: string
         type: string
+        format: string
       document_number:
-        items: string
         type: string
+        format: string
       price:
-        items: double
-        type: double
+        type: number
+        format: double
   DeleteReceivedInventory:
     type: object
     properties:
@@ -1444,93 +1444,93 @@ definitions:
     type: object
     properties:
       stock_id:
-        items: string
         type: string
+        format: string
       unit_id:
-        items: string
         type: string
+        format: string
       season_code:
-        items: string
         type: string
+        format: string
       agent_id:
         type: array
         items:
           type: string
           format: string
       farmer_group_id:
-        items: string
         type: string
+        format: string
       leader_id:
-        items: string
         type: string
+        format: string
       sub_brand:
-        items: string
         type: string
+        format: string
       sub_category:
-        items: string
         type: string
+        format: string
       inventory_code:
-        items: string
         type: string
+        format: string
       demand:
-        items: double
-        type: double
+        type: number
+        format: double
       stock:
-        items: double
-        type: double
+        type: number
+        format: double
       received:
-        items: double
-        type: double
+        type: number
+        format: double
       picked:
-        items: double
-        type: double
+        type: number
+        format: double
       created_at:
-        items: string
-        type: date
+        type: string
+        format: date
       updated_at:
-        items: string
-        type: date
+        type: string
+        format: date
   InsertStockCard:
     type: object
     properties:
       unit_id:
-        items: string
         type: string
+        format: string
       season_code:
-        items: string
         type: string
+        format: string
       agent_id:
         type: array
         items:
           type: string
           format: string
       farmer_group_id:
-        items: string
         type: string
+        format: string
       leader_id:
-        items: string
         type: string
+        format: string
       sub_brand:
-        items: string
         type: string
+        format: string
       sub_category:
-        items: string
         type: string
+        format: string
       inventory_code:
-        items: string
         type: string
+        format: string
       demand:
-        items: double
-        type: double
+        type: number
+        format: double
       stock:
-        items: double
-        type: double
+        type: number
+        format: double
       received:
-        items: double
-        type: double
+        type: number
+        format: double
       picked:
-        items: double
-        type: double
+        type: number
+        format: double
   ListSubBrand:
     type: array
     items:

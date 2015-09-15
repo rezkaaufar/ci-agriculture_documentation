@@ -11,9 +11,16 @@ In addition to the convention above, we also implement our own rule. For the tim
 Our naming standard comprises of element as follows.  
   - Every variables or information should be in **English Language**, except for particular terms that the team decided to be in Indonesian Language.  
   - All variables in code must use camelCase. Example : ```seasonCode```
-  - JSON Node or database-pointing information uses underscore ```_``` as replacement of whitespace. Example : ```farmer_field``` is the right format to be returned with Json Node.
-  - Collection name in MongoDB must use underscore ```_``` as replacement of whitespace and dot ('.') to distinguish the module with its sub-section. Example : ```procurement_distribution.farmer_distribution``` means that this collections consists of **farmer distribution** data in **procurment and distribution** module.
-  - Each field that represents the same value must have the same name if it exists in different collections. Example : ```Farmer``` and ```FarmerField``` collection both have ```farmer_name``` as String field and its name should be the same. Cases like ```farmer_name``` field exist in ```Farmer``` collection and ```name``` field exist in ```FarmerField``` while in fact they represent the same value is intolerable.
-  - Collection/table name must be in singular forms. Plural form such as ```Farmers``` are not allowed.
+  - JSON Node or database-representative information uses underscore ```_``` as replacement of whitespace. Example : ```farmer_field``` is the right format to be returned with Json Node.
+  - Table name in mysql must use underscore ```_``` as replacement of whitespace and to distinguish the module with its sub-section. Example : ```procurement_distribution_farmer_distribution``` means that this tables consists of **farmer distribution** data in **procurment and distribution** module. Though this format is a little hard to interpret, MySQL uses this format as their naming standard. 
+  - Each field that represents the same value must have the same name if it exists in different tables. Example : ```Farmer``` and ```FarmerField``` collection both have ```farmer_name``` as String field and its name should be the same. Cases like ```farmer_name``` field exist in ```Farmer``` table and ```name``` field exist in ```FarmerField``` table while in fact they represent the same value is intolerable.
+  - Table name must be in singular forms. Plural form such as ```Farmers``` are not allowed.
+  - For our standard web service operation, use ```find```, ```insert```, ```update```, and ```delete``` as our standard naming.
 
-There's still some work left to be done on Endpoint URI naming convention. We will update the docs as soon as we get the chance. See ya later moronic asshole.
+## Code Standard
+
+Our backend services which shapes our REST API comprises of two components, Model and Controller. Several rules of Backend Code that must be implemented as a standard is as follows.
+- Every controller-related method that directly serves and called by the routes endpoint should be placed on top of the Class, followed by supporting method which serves as helper and whatnot.
+- For POST related command, such as ```insert```, ```update```, or ```delete```, must have an intuitive feedback in case of input mismatch or incorrect type in the user JSON input. The feedback also must be in JSON Format. Take a look at UnitPlanningController for details
+
+There's still some work left to be done on Endpoint URI naming convention and on Code Standard. We will update the docs as soon as we get the chance.

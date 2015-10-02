@@ -40,4 +40,10 @@ Each farmer might have several files. The information of farmer's files url can 
 		- 200
 			{
 				"<file_info>": "<file_public_url>"
+				[
+					{
+						file_info: "profile",
+						file_url: url
+					}
+				]
 			}

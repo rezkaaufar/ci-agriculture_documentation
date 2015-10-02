@@ -1,0 +1,278 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: IFM
+basePath: /v2
+tags:
+  - name: Master Location
+    description: Information about leads
+
+schemes:
+  - http
+  
+################################################################################
+##################################### PATHS ####################################
+################################################################################
+paths:
+############################# MASTER LOCATIONS #################################
+  /master/provinsi/find:
+    get:
+      tags:
+        - Master Location
+      summary: Find all provinsi
+      description: ''
+      operationId: findProvinsi
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/provinsi-list'
+        '500':
+          description: internal server error
+  /master/kabupaten/find:
+    get:
+      tags:
+        - Master Location
+      summary: Find all kabupaten
+      description: ''
+      operationId: findKabupaten
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: provinsi_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/kabupaten-list'
+        '500':
+          description: internal server error
+  /master/kecamatan/find:
+    get:
+      tags:
+        - Master Location
+      summary: Find all kecamatan
+      description: ''
+      operationId: findKecamatan
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: kabupaten_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/kecamatan-list'
+        '500':
+          description: internal server error
+  /master/desa/find:
+    get:
+      tags:
+        - Master Location
+      summary: Find all desa
+      description: ''
+      operationId: findDesa
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: query
+          name: provinsi_id
+          type: integer
+          required: false
+        - in: query
+          name: kabupaten_id
+          type: integer
+          required: false
+        - in: query
+          name: kecamatan_id
+          type: integer
+          required: false
+        - in: query
+          name: desa_id
+          type: integer
+          required: false
+        - in: query
+          name: path
+          type: integer
+          required: false
+          description: 'data pagination'
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/desa-list'
+        '500':
+          description: internal server error
+######################### DESA UNIT ASSIGNMENT #################################
+  /master/desa/updateUnit:
+    post:
+      tags:
+        - Master Location
+      summary: assign multiple desa to a unit on given season
+      description: ''
+      operationId: assignUnitDesa
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of unit-desa assignment
+          required: true
+          schema:
+            $ref: '#/definitions/desa-unit-update-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /master/desa/removeUnit:
+    post:
+      tags:
+        - Master Location
+      summary: unassign multiple desa to a unit on given season
+      description: ''
+      operationId: unassignUnitDesa
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of unit-desa unassignment
+          required: true
+          schema:
+            $ref: '#/definitions/desa-unit-update-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+################################ MARKET DATA ###################################
+  
+################################################################################
+################################## DEFINITION ##################################
+################################################################################
+definitions:
+  provinsi-list:
+    type: array
+    items:
+      $ref: '#/definitions/provinsi'
+  provinsi:
+    type: object
+    properties:
+      provinsi_id:
+        type: integer
+        format: int64
+      provinsi:
+        type: string
+        format: string
+      provinsi_code:
+        type: string
+        format: string
+################################################################################
+  kabupaten-list:
+    type: array
+    items:
+      $ref: '#/definitions/kabupaten'
+  kabupaten:
+    type: object
+    properties:
+      kabupaten_id:
+        type: integer
+        format: int64
+      kabupaten:
+        type: string
+        format: string
+      kabupaten_code:
+        type: string
+        format: string
+################################################################################
+  kecamatan-list:
+    type: array
+    items:
+      $ref: '#/definitions/kecamatan'
+  kecamatan:
+    type: object
+    properties:
+      kecamatan_id:
+        type: integer
+        format: int64
+      kecamatan:
+        type: string
+        format: string
+      kecamatan_code:
+        type: string
+        format: string
+################################################################################
+  desa-list:
+    type: array
+    items:
+      $ref: '#/definitions/desa'
+  desa:
+    type: object
+    properties:
+      desa_id:
+        type: integer
+        format: int64
+      desa:
+        type: string
+        format: string
+      desa_code:
+        type: string
+        format: string
+      kecamatan:
+        type: string
+        format: string
+      kecamatan_code:
+        type: string
+        format: string
+      kabupaten:
+        type: string
+        format: string
+      kabupaten:
+        type: string
+        format: string
+      provinsi:
+        type: string
+        format: string
+      provinsi_code:
+        type: string
+        format: string
+################################################################################
+  desa-unit-update-delete:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      season_id:
+        type: integer
+        format: int64
+      desa_list:
+        type: array
+        items:
+          type: integer
+          format: int64
+          description: 'id of to-be assigned desa'
+      
+################################################################################
+externalDocs:
+  description: CI - Agriculture
+  url: 'http://ci-agriculture.com/'

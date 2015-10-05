@@ -6,8 +6,9 @@ info:
 basePath: /v2
 tags:
   - name: Master Location
-    description: Information about leads
-
+    description: Information about Territorial Locations
+  - name: Sales Lead
+    description: Information about Sales Leads
 schemes:
   - http
   
@@ -29,7 +30,7 @@ paths:
         '200':
           description: successful request
           schema:
-            $ref: '#/definitions/provinsi-list'
+            $ref: '#/definitions/provinsi-find'
         '500':
           description: internal server error
   /master/kabupaten/find:
@@ -50,7 +51,7 @@ paths:
         '200':
           description: successful request
           schema:
-            $ref: '#/definitions/kabupaten-list'
+            $ref: '#/definitions/kabupaten-find'
         '500':
           description: internal server error
   /master/kecamatan/find:
@@ -71,7 +72,7 @@ paths:
         '200':
           description: successful request
           schema:
-            $ref: '#/definitions/kecamatan-list'
+            $ref: '#/definitions/kecamatan-find'
         '500':
           description: internal server error
   /master/desa/find:
@@ -102,7 +103,7 @@ paths:
           type: integer
           required: false
         - in: query
-          name: path
+          name: page
           type: integer
           required: false
           description: 'data pagination'
@@ -110,7 +111,7 @@ paths:
         '200':
           description: successful request
           schema:
-            $ref: '#/definitions/desa-list'
+            $ref: '#/definitions/desa-find'
         '500':
           description: internal server error
 ######################### DESA UNIT ASSIGNMENT #################################
@@ -165,96 +166,617 @@ paths:
         '500':
           description: internal server error
 ################################ MARKET DATA ###################################
-  
+  /salesLead/marketData/find:
+    get:
+      tags:
+        - Sales Lead
+      summary: Find all market data
+      description: ''
+      operationId: findMarketData
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: kecamatan_id
+          type: integer
+          required: true
+        - in: query
+          name: season_id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/market-data-find'
+        '500':
+          description: internal server error
+  /salesLead/marketData/find/detail:
+    get:
+      tags:
+        - Sales Lead
+      summary: Find all desa
+      description: ''
+      operationId: findMarketDataDetail
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: provinsi_id
+          type: integer
+          required: true
+        - in: query
+          name: season_id
+          type: integer
+          required: true
+        - in: query
+          name: page
+          type: integer
+          description: 'data pagination'
+          required: true
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/market-data-detail-find'
+        '500':
+          description: internal server error
+  /salesLead/marketData/update:
+    post:
+      tags:
+        - Sales Lead
+      summary: update market data of desa on particular season
+      description: ''
+      operationId: updateMarketData
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted market data
+          required: true
+          schema:
+            $ref: '#/definitions/market-data-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /salesLead/marketData/delete:
+    post:
+      tags:
+        - Sales Lead
+      summary: delete market data of desa on particular season
+      description: ''
+      operationId: deleteMarketData
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted market data
+          required: true
+          schema:
+            $ref: '#/definitions/market-data-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+################################## Unit Plan ###################################
+  /salesLead/unitPlan/find:
+    get:
+      tags:
+        - Sales Lead
+      summary: Find all unit plan on given season
+      description: ''
+      operationId: findUnitPlan
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/unit-plan-find-update'
+        '500':
+          description: internal server error
+  /salesLead/unitPlan/update:
+    post:
+      tags:
+        - Sales Lead
+      summary: update unit plan on given season
+      description: ''
+      operationId: updateUnitPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated unit plan
+          required: true
+          schema:
+            $ref: '#/definitions/unit-plan-find-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /salesLead/unitPlan/delete:
+    post:
+      tags:
+        - Sales Lead
+      summary: update unit plan on given season
+      description: ''
+      operationId: deleteUnitPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted unit plan
+          required: true
+          schema:
+            $ref: '#/definitions/unit-plan-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+################################## Desa Plan ###################################   
+  /salesLead/desaPlan/find:
+    get:
+      tags:
+        - Sales Lead
+      summary: Find all desa plan on given unit and season
+      description: ''
+      operationId: findDesaPlan
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+        - in: query
+          name: desa_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/desa-plan-find'
+        '500':
+          description: internal server error
+  /salesLead/desaPlan/update:
+    post:
+      tags:
+        - Sales Lead
+      summary: update desa plan on given season
+      description: ''
+      operationId: updateDesaPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated desa plan
+          required: true
+          schema:
+            $ref: '#/definitions/desa-plan-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /salesLead/desaPlan/delete:
+    post:
+      tags:
+        - Sales Lead
+      summary: delete desa plan on given season
+      description: ''
+      operationId: deleteDesaPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted desa plan
+          required: true
+          schema:
+            $ref: '#/definitions/desa-plan-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+################################## Agent Plan ##################################
+  /salesLead/agentPlan/find:
+    get:
+      tags:
+        - Sales Lead
+      summary: Find all agent plan on given unit, desa, and season
+      description: ''
+      operationId: findAgentPlan
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+        - in: query
+          name: desa_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/agent-plan-find'
+        '500':
+          description: internal server error 
+  /salesLead/agentPlan/update:
+    post:
+      tags:
+        - Sales Lead
+      summary: update agent plan on given unit, desa and season
+      description: ''
+      operationId: updateAgentPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated agent plan
+          required: true
+          schema:
+            $ref: '#/definitions/agent-plan-update-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /salesLead/agentPlan/delete:
+    post:
+      tags:
+        - Sales Lead
+      summary: delete agent plan on given season
+      description: ''
+      operationId: deleteAgentPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted agent plan
+          required: true
+          schema:
+            $ref: '#/definitions/agent-plan-update-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+################################## Sales Lead ##################################
+  /salesLead/find:
+    get:
+      tags:
+        - Sales Lead
+      summary: Find all sales lead in given unit and season
+      description: ''
+      operationId: findSalesLead
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: sales_lead_id
+          type: integer
+          required: false
+        - in: query
+          name: unit_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+        - in: query
+          name: search
+          type: string
+          required: false
+        - in: query
+          name: page
+          type: integer
+          required: false
+          description: 'data pagination purpose'
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/sales-lead-find'
+        '500':
+          description: internal server error 
+  /salesLead/insert:
+    post:
+      tags:
+        - Sales Lead
+      summary: insert sales lead on given unit and season
+      description: ''
+      operationId: insertSalesLead
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted sales lead
+          required: true
+          schema:
+            $ref: '#/definitions/sales-lead-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error  
+  /salesLead/update:
+    post:
+      tags:
+        - Sales Lead
+      summary: update sales lead on given unit and season
+      description: ''
+      operationId: updateSalesLead
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated sales lead
+          required: true
+          schema:
+            $ref: '#/definitions/sales-lead-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error  
+  /salesLead/delete:
+    post:
+      tags:
+        - Sales Lead
+      summary: delete sales lead on given unit and season
+      description: ''
+      operationId: deleteSalesLead
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted sales lead
+          required: true
+          schema:
+            $ref: '#/definitions/sales-lead-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /salesLead/contact/find:
+    get:
+      tags:
+        - Sales Lead
+      summary: Find all sales lead contacts in given sales lead, unit and season
+      description: ''
+      operationId: findSalesLeadContact
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: sales_lead_id
+          type: integer
+          required: false
+        - in: query
+          name: contact_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/sales-lead-contact-find'
+        '500':
+          description: internal server error 
+  /salesLead/contact/update:
+    post:
+      tags:
+        - Sales Lead
+      summary: update sales lead contact on given unit and season
+      description: ''
+      operationId: updateSalesLeadContact
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated sales lead contact
+          required: true
+          schema:
+            $ref: '#/definitions/sales-lead-contact-insert-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error 
+  /salesLead/contact/delete:
+    post:
+      tags:
+        - Sales Lead
+      summary: delete sales lead contact on given unit and season
+      description: ''
+      operationId: deleteSalesLeadContact
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted sales lead contact
+          required: true
+          schema:
+            $ref: '#/definitions/sales-lead-contact-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
 ################################################################################
 ################################## DEFINITION ##################################
 ################################################################################
 definitions:
-  provinsi-list:
+  provinsi-find:
     type: array
     items:
-      $ref: '#/definitions/provinsi'
-  provinsi:
-    type: object
-    properties:
-      provinsi_id:
-        type: integer
-        format: int64
-      provinsi:
-        type: string
-        format: string
-      provinsi_code:
-        type: string
-        format: string
+      type: object
+      properties:
+        provinsi_id:
+          type: integer
+          format: int64
+        provinsi:
+          type: string
+          format: string
+        provinsi_code:
+          type: string
+          format: string
 ################################################################################
-  kabupaten-list:
+  kabupaten-find:
     type: array
     items:
-      $ref: '#/definitions/kabupaten'
-  kabupaten:
-    type: object
-    properties:
-      kabupaten_id:
-        type: integer
-        format: int64
-      kabupaten:
-        type: string
-        format: string
-      kabupaten_code:
-        type: string
-        format: string
+      type: object
+      properties:
+        kabupaten_id:
+          type: integer
+          format: int64
+        kabupaten:
+          type: string
+          format: string
+        kabupaten_code:
+          type: string
+          format: string
 ################################################################################
-  kecamatan-list:
+  kecamatan-find:
     type: array
     items:
-      $ref: '#/definitions/kecamatan'
-  kecamatan:
-    type: object
-    properties:
-      kecamatan_id:
-        type: integer
-        format: int64
-      kecamatan:
-        type: string
-        format: string
-      kecamatan_code:
-        type: string
-        format: string
+      type: object
+      properties:
+        kecamatan_id:
+          type: integer
+          format: int64
+        kecamatan:
+          type: string
+          format: string
+        kecamatan_code:
+          type: string
+          format: string
 ################################################################################
-  desa-list:
+  desa-find:
     type: array
     items:
-      $ref: '#/definitions/desa'
-  desa:
-    type: object
-    properties:
-      desa_id:
-        type: integer
-        format: int64
-      desa:
-        type: string
-        format: string
-      desa_code:
-        type: string
-        format: string
-      kecamatan:
-        type: string
-        format: string
-      kecamatan_code:
-        type: string
-        format: string
-      kabupaten:
-        type: string
-        format: string
-      kabupaten:
-        type: string
-        format: string
-      provinsi:
-        type: string
-        format: string
-      provinsi_code:
-        type: string
-        format: string
+      type: object
+      properties:
+        desa_id:
+          type: integer
+          format: int64
+        desa:
+          type: string
+          format: string
+        desa_code:
+          type: string
+          format: string
+        kecamatan:
+          type: string
+          format: string
+        kecamatan_code:
+          type: string
+          format: string
+        kabupaten:
+          type: string
+          format: string
+        kabupaten:
+          type: string
+          format: string
+        provinsi:
+          type: string
+          format: string
+        provinsi_code:
+          type: string
+          format: string
 ################################################################################
   desa-unit-update-delete:
     type: object
@@ -271,8 +793,437 @@ definitions:
           type: integer
           format: int64
           description: 'id of to-be assigned desa'
-      
 ################################################################################
+  market-data-find:
+    type: array
+    items:
+      type: object
+      properties:
+        market-data:
+          type: object
+          properties:
+            desa_id:
+              type: integer
+              format: int64
+            desa_name:
+              type: string
+              format: string
+            potential:
+              type: number
+              format: double
+  market-data-detail-find:
+    type: array
+    items:
+      type: object
+      properties:
+        desa_id:
+          type: integer
+          format: int64
+        desa:
+          type: string
+          format: string
+        unit_id:
+          type: integer
+          format: int64
+        unit:
+          type: string
+          format: string
+        distance_to_unit:
+          description: 'distance of given desa to availables unit'
+          type: array
+          items:
+            type: object
+            properties:
+              unit_id:
+                type: integer
+                format: int64
+              distance:
+                type: number
+                format: double
+        kecamatan:
+          type: string
+          format: string
+        kabupaten:
+          type: string
+          format: string
+        potential:
+          type: number
+          format: double
+        customer:
+          type: number
+          format: double
+  market-data-update:
+    type: object
+    properties:
+      desa_list:
+        type: array
+        items:
+          type: object
+          properties:
+            desa_id:
+              type: integer
+              format: int64
+            season_id:
+              type: integer
+              format: int64
+            potential:
+              type: number
+              format: double
+  market-data-delete:
+    type: object
+    properties:
+      desa_list:
+        type: array
+        items:
+          type: object
+          properties:
+            desa_id:
+              type: integer
+              format: int64
+            season_id:
+              type: integer
+              format: int64
+################################################################################
+  unit-plan-find-update:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      season_id:
+        type: integer
+        format: int64
+      season_target:
+        type: number
+        format: double
+      field_last_season:
+        type: number
+        format: double
+      retention_rate:
+        type: number
+        format: double
+      conversion_rate:
+        type: number
+        format: double
+  unit-plan-delete:
+    type: object
+    properties:
+      unit_list:
+        type: array
+        items:
+          type: object
+          properties:
+            unit_id:
+              type: integer
+              format: int64
+            season_id:
+              type: integer
+              format: int64
+  desa-plan-find:
+    type: object
+    properties:
+      unit_id:
+        type: integer
+        format: int64
+      season_id:
+        type: integer
+        format: int64
+      desa_id:
+        type: integer
+        format: int64
+      desa_name:
+        type: string
+        format: string
+      sales_lead_target_each:
+        type: number
+        format: double
+      potential:
+        type: number
+        format: double
+  desa-plan-update:
+    type: object
+    properties:
+      desa_plan_list:
+        type: array
+        items:
+          type: object
+          properties:
+            unit_id:
+              type: integer
+              format: int64
+            season_id:
+              type: integer
+              format: int64
+            desa_id:
+              type: integer
+              format: int64
+            sales_lead_target_each:
+              type: number
+              format: double
+  desa-plan-delete:
+    type: object
+    properties:
+      desa_plan_list:
+        type: array
+        items:
+          type: object
+          properties:
+            unit_id:
+              type: integer
+              format: int64
+            season_id:
+              type: integer
+              format: int64
+            desa_id:
+              type: integer
+              format: int64
+  agent-plan-find:
+    type: array
+    items:
+      type: object
+      properties:
+        unit_id:
+          type: integer
+          format: int64
+        season_id:
+          type: integer
+          format: int64
+        desa_id:
+          type: integer
+          format: int64
+        agent_id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          format: string
+  agent-plan-update-delete:
+    type: object
+    properties:
+      agent_plan_list:
+        type: array
+        items:
+          type: object
+          properties:
+            unit_id:
+              type: integer
+              format: int64
+            season_id:
+              type: integer
+              format: int64
+            desa_id:
+              type: integer
+              format: int64
+            agent_id:
+              type: integer
+              format: int64
+################################################################################
+  sales-lead-find:
+    type: array
+    items:
+      type: object
+      properties:
+        sales_lead_id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          format: string
+        type:
+          type: string
+          format: string
+        unit_id:
+          type: integer
+          format: int64
+        season_id:
+          type: integer
+          format: int64
+        agent_id:
+          type: integer
+          format: int64
+        potential_field:
+          type: number
+          format: double
+        target_field:
+          type: number
+          format: double
+        number_of_farmers:
+          type: integer
+          format: int64
+        status_leads:
+          type: string
+          format: string
+        additional_notes:
+          type: string
+          format: string
+  sales-lead-insert:
+    type: object
+    properties:
+      name:
+        type: string
+        format: string
+      type:
+        type: string
+        format: string
+      unit_id:
+        type: integer
+        format: int64
+      season_id:
+        type: integer
+        format: int64
+      agent_id:
+        type: integer
+        format: int64
+      potential_field:
+        type: number
+        format: double
+      target_field:
+        type: number
+        format: double
+      number_of_farmers:
+        type: integer
+        format: int64
+      status_leads:
+        type: string
+        format: string
+      additional_notes:
+        type: string
+        format: string
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/sales-lead-contact-insert-update'
+        description: 'optional'
+  sales-lead-update:
+    type: object
+    properties:
+      sales_lead_id:
+        type: integer
+        format: int64
+        description: 'required'
+      name:
+        type: string
+        format: string
+        description: 'optional on update'
+      type:
+        type: string
+        format: string
+        description: 'optional on update'
+      unit_id:
+        type: integer
+        format: int64
+        description: 'optional on update'
+      season_id:
+        type: integer
+        format: int64
+        description: 'optional on update'
+      agent_id:
+        type: integer
+        format: int64
+        description: 'optional on update'
+      potential_field:
+        type: number
+        format: double
+        description: 'optional on update'
+      target_field:
+        type: number
+        format: double
+        description: 'optional on update'
+      number_of_farmers:
+        type: integer
+        format: int64
+        description: 'optional on update'
+      status_leads:
+        type: string
+        format: string
+        description: 'optional on update'
+      additional_notes:
+        type: string
+        format: string
+        description: 'optional'
+  sales-lead-delete:
+    type: object
+    properties:
+      sales_lead_id:
+        type: integer
+        format: int64
+  sales-lead-contact-find:
+    type: array
+    items:
+      type: object
+      properties:
+        contact_id:
+          type: integer
+          format: int64
+        sales_lead_id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          format: string
+        relationship:
+          type: string
+          format: string
+        desa_id:
+          type: integer
+          format: int64
+        address:
+          type: string
+          format: string
+        address_rt:
+          type: string
+          format: string
+        address_rw:
+          type: string
+          format: string
+        address_postal:
+          type: string
+          format: string
+        tel_number:
+          type: string
+          format: string
+        phone_number:
+          type: string
+          format: string
+  sales-lead-contact-insert-update:
+    type: object
+    properties:
+      sales_lead_id:
+        type: integer
+        format: int64
+      name:
+        type: string
+        format: string
+      relationship:
+        type: string
+        format: string
+      desa_id:
+        type: integer
+        format: int64
+      address:
+        type: string
+        format: string
+      address_rt:
+        type: string
+        format: string
+      address_rw:
+        type: string
+        format: string
+      address_postal:
+        type: string
+        format: string
+      tel_number:
+        type: string
+        format: string
+      phone_number:
+        type: string
+        format: string
+  sales-lead-contact-delete:
+    type: object
+    properties:
+      contact_id:
+        type: integer
+        format: int64
 externalDocs:
   description: CI - Agriculture
   url: 'http://ci-agriculture.com/'

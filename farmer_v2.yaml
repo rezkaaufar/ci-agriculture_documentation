@@ -1,0 +1,550 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: IFM
+basePath: /v2
+tags:
+  - name: Farmer
+    description: Information about Farmers
+schemes:
+  - http
+  
+################################################################################
+##################################### PATHS ####################################
+################################################################################
+paths:
+################################## FARMER ######################################
+  /farmer/find:
+    get:
+      tags:
+        - Farmer
+      summary: Find all farmers
+      description: ''
+      operationId: findFarmer
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_id
+          type: integer
+          required: false
+        - in: query
+          name: desa_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-find'
+        '500':
+          description: internal server error 
+  /farmer/insert:
+    post:
+      tags:
+        - Farmer
+      summary: insert farmer
+      description: ''
+      operationId: insertFarmer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted farmer
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/update:
+    post:
+      tags:
+        - Farmer
+      summary: update farmer
+      description: ''
+      operationId: updateFarmer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/delete:
+    post:
+      tags:
+        - Farmer
+      summary: delete farmer
+      description: ''
+      operationId: deleteFarmer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted farmer
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+############################## FARMER DETAIL ###################################
+  /farmer/detail/insert:
+    post:
+      tags:
+        - Farmer
+      summary: insert farmer detail
+      description: ''
+      operationId: insertFarmerDetail
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted farmer detail
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-detail-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/detail/update:
+    post:
+      tags:
+        - Farmer
+      summary: update farmer detail
+      description: ''
+      operationId: updateFarmerDetail
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer detail
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-detail-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/detail/delete:
+    post:
+      tags:
+        - Farmer
+      summary: delete farmer detail
+      description: ''
+      operationId: deleteFarmerDetail
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted farmer detail
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-detail-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+############################## FARMER CONTACT ##################################
+  /farmer/contact/insert:
+    post:
+      tags:
+        - Farmer
+      summary: insert farmer contact
+      description: ''
+      operationId: insertFarmerContact
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted farmer contact
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-contact-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/contact/update:
+    post:
+      tags:
+        - Farmer
+      summary: update farmer contact
+      description: ''
+      operationId: updateFarmerContact
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer contact
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-contact-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/contact/delete:
+    post:
+      tags:
+        - Farmer
+      summary: delete farmer contact
+      description: ''
+      operationId: deleteFarmerContact
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted farmer contact
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-contact-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+################################################################################
+################################## DEFINITION ##################################
+################################################################################
+definitions:
+  farmer-find:
+    type: array
+    items:
+      type: object
+      properties: 
+        farmer_id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          format: string
+        sales_lead_id:
+          type: integer
+          format: int64
+        sex:
+          type: string
+          format: string
+        desa_id:
+          type: integer
+          format: int64
+        address:
+          type: string
+          format: string
+        address_rw:
+          type: string
+          format: string
+        address_rt:
+          type: string
+          format: string
+        address_postal:
+          type: string
+          format: string
+        address_longitude:
+          type: number
+          format: float
+        address_latitude:
+          type: number
+          format: float
+  farmer-insert:
+    type: object
+    properties:
+      name:
+        type: string
+        format: string
+      sales_lead_id:
+        type: integer
+        format: int64
+      sex:
+        type: string
+        format: string
+      desa_id:
+        type: integer
+        format: int64
+      address:
+        type: string
+        format: string
+      address_rw:
+        type: string
+        format: string
+      address_rt:
+        type: string
+        format: string
+      address_postal:
+        type: string
+        format: string
+      address_longitude:
+        type: number
+        format: float
+      address_latitude:
+        type: number
+        format: float
+      phone_numbers:
+        type: array
+        items:
+          type: string
+          format: string
+  farmer-update:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+      name:
+        type: string
+        format: string
+      sales_lead_id:
+        type: integer
+        format: int64
+      sex:
+        type: string
+        format: string
+      desa_id:
+        type: integer
+        format: int64
+      address:
+        type: string
+        format: string
+      address_rw:
+        type: string
+        format: string
+      address_rt:
+        type: string
+        format: string
+      address_postal:
+        type: string
+        format: string
+      address_longitude:
+        type: number
+        format: float
+      address_latitude:
+        type: number
+        format: float
+      phone_numbers:
+        type: array
+        items:
+          type: string
+          format: string
+  farmer-delete:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+  farmer-detail-insert:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+      no_ktp:
+        type: string
+        format: string
+      no_kk:
+        type: string
+        format: string
+      birth_place:
+        type: string
+        format: string
+      birth_date:
+        type: string
+        format: string
+      number_of_dependents:
+        type: integer
+        format: int64
+      marital_status:
+        type: string
+        format: string
+      mother_name:
+        type: string
+        format: string
+      residence_period:
+        type: integer
+        format: int64
+      education:
+        type: string
+        format: string
+      experience:
+        type: string
+        format: string
+      additional_job:
+        type: string
+        format: string
+  farmer-detail-update:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+      no_ktp:
+        type: string
+        format: string
+      no_kk:
+        type: string
+        format: string
+      birth_place:
+        type: string
+        format: string
+      birth_date:
+        type: string
+        format: string
+      number_of_dependents:
+        type: integer
+        format: int64
+      marital_status:
+        type: string
+        format: string
+      mother_name:
+        type: string
+        format: string
+      residence_period:
+        type: integer
+        format: int64
+      education:
+        type: string
+        format: string
+      experience:
+        type: string
+        format: string
+      additional_job:
+        type: string
+        format: string
+  farmer-detail-delete:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+  farmer-contact-insert:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+      name:
+        type: string
+        format: string
+      relationship:
+        type: string
+        format: string
+      desa_id:
+        type: integer
+        format: int64
+      address:
+        type: string
+        format: string
+      address_rw:
+        type: string
+        format: string
+      address_rt:
+        type: string
+        format: string
+      address_postal:
+        type: string
+        format: string
+      phone_numbers:
+        type: array
+        items:
+          type: string
+          format: string
+  farmer-contact-update:
+    type: object
+    properties:
+      contact_id:
+        type: integer
+        format: int64
+      name:
+        type: string
+        format: string
+      relationship:
+        type: string
+        format: string
+      desa_id:
+        type: integer
+        format: int64
+      address:
+        type: string
+        format: string
+      address_rw:
+        type: string
+        format: string
+      address_rt:
+        type: string
+        format: string
+      address_postal:
+        type: string
+        format: string
+      phone_numbers:
+        type: array
+        items:
+          type: string
+          format: string
+  farmer-contact-delete:
+    type: object
+    properties:
+      contact_id:
+        type: integer
+        format: int64

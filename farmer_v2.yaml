@@ -7,6 +7,10 @@ basePath: /v2
 tags:
   - name: Farmer
     description: Information about Farmers
+  - name: Farmer Group
+    description: Information about Farmer Groups
+  - name: Farmer File
+    description: Information about Farmer Files
 schemes:
   - http
   
@@ -267,6 +271,279 @@ paths:
           description: invalid input data
         '500':
           description: internal server error
+############################## FARMER GROUP ####################################
+  /farmer/group/find:
+    get:
+      tags:
+        - Farmer Group
+      summary: Find all farmer group based on id, season, or unit
+      description: ''
+      operationId: findFarmerGroup
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_group_id
+          type: integer
+          required: false
+        - in: query
+          name: unit_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-group-find'
+        '500':
+          description: internal server error  
+  /farmer/group/find/detail:
+    get:
+      tags:
+        - Farmer Group
+      summary: Find all farmers
+      description: ''
+      operationId: findFarmerGroupDetail
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_group_id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-group-find-detail'
+        '500':
+          description: internal server error
+  /farmer/group/insert:
+    post:
+      tags:
+        - Farmer Group
+      summary: insert farmer
+      description: ''
+      operationId: insertFarmerGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted farmer group
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-group-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/group/update:
+    post:
+      tags:
+        - Farmer Group
+      summary: update farmer
+      description: ''
+      operationId: updateFarmerGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer group
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-group-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/group/delete:
+    post:
+      tags:
+        - Farmer Group
+      summary: delete farmer
+      description: ''
+      operationId: deleteFarmerGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted farmer group
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-group-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/group/assignLeader:
+    post:
+      tags:
+        - Farmer Group
+      summary: update farmer
+      description: ''
+      operationId: updateFarmerGroupLeader
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-group-update-leader'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/group/updateMember:
+    post:
+      tags:
+        - Farmer Group
+      summary: update farmer
+      description: ''
+      operationId: updateFarmerGroupMember
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-group-update-member'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+############################### FARMER FILE ####################################
+  '/farmer/files/{encoded_id}/{encoded_file_description}/{encoded_file_name}':
+    get:
+      tags:
+        - Farmer File
+      summary: Retrieve specified farmer file
+      description: ''
+      produces:
+        - image/jpeg
+      parameters:
+        - name: encoded_id
+          in: path
+          required: true
+          type: string
+          format: string
+        - name: encoded_file_description
+          in: path
+          required: true
+          type: string
+          format: string
+        - name: encoded_file_name
+          in: path
+          required: true
+          type: string
+          format: string
+      responses:
+        '200':
+          description: successful request
+        '500':
+          description: internal server error
+  /farmer/files/find:
+    get:
+      tags:
+        - Farmer File
+      summary: Find all files url of specified farmer
+      description: ''
+      operationId: findFarmerFiles
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-files-find'
+        '500':
+          description: internal server error
+  /farmer/files/upload:
+    post:
+      tags:
+        - Farmer File
+      summary: upload a file of specified farmer
+      description: ''
+      operationId: uploadFarmerFile
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: image
+          description: 'attached image file'
+          type: file
+          required: true
+      responses:
+        '200':
+          description: successful request
+        '500':
+          description: internal server error
+  /farmer/files/delete:
+    post:
+      tags:
+        - Farmer File
+      summary: delete files of specified farmer
+      description: ''
+      operationId: deleteFarmerFiles
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-files-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error  
 ################################################################################
 ################################## DEFINITION ##################################
 ################################################################################
@@ -548,3 +825,170 @@ definitions:
       contact_id:
         type: integer
         format: int64
+  farmer-group-find:
+    type: array
+    items:
+      $ref: '#/definitions/farmer-group-find-detail'
+  farmer-group-find-detail:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+        format: string
+      season_id:
+        type: integer
+        format: int64
+      unit_id:
+        type: integer
+        format: int64
+      agent_list:
+        type: array
+        items:
+          type: object
+          properties:
+            agent_id:
+              type: integer
+              format: int64
+            name:
+              type: string
+              format: string
+      farmer_list:
+        type: array
+        items:
+          type: object
+          properties:
+            farmer_id:
+              type: integer
+              format: int64
+            name:
+              type: string
+              format: string
+            desa:
+              type: string
+              format: string
+            kecamatan:
+              type: string
+              format: string
+            address:
+              type: string
+              format: string
+            role:
+              type: string
+              format: string
+            phones:
+              type: array
+              items:
+                type: string
+                format: string
+  farmer-group-insert:
+    type: object
+    properties:
+      name:
+        type: string
+        format: string
+      season_id:
+        type: integer
+        format: int64
+      unit_id:
+        type: integer
+        format: int64
+      agent_list:
+        type: array
+        items:
+          type: integer
+          format: int64
+  farmer-group-update:
+    type: object
+    properties:
+      farmer_group_id:
+        type: integer
+        format: int64
+      name:
+        type: string
+        format: string
+        description: 'optional for update operation'
+      season_id:
+        type: integer
+        format: int64
+        description: 'optional for update operation'
+      unit_id:
+        type: integer
+        format: int64
+        description: 'optional for update operation'
+      agent_list:
+        type: array
+        items:
+          type: integer
+          format: int64
+  farmer-group-delete:
+    type: object
+    properties:
+      farmer_group_list:
+        type: array
+        items:
+          type: integer
+          format: int64
+  farmer-group-update-leader:
+    type: object
+    properties:
+      farmer_group_id:
+        type: integer
+        format: int64
+      farmer_id:
+        type: integer
+        format: int64
+  farmer-group-update-member:
+    type: object
+    properties:
+      farmer_group_id:
+        type: integer
+        format: int64
+      season_id:
+        type: integer
+        format: int64
+      unit_id:
+        type: integer
+        format: int64
+      farmer_list:
+        type: array
+        items:
+          type: integer
+          format: int64
+  farmer-files-find:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+      file_description:
+        type: object
+        description: 'file description field could be "ktp", "sertifikat", etc'
+        properties:
+          file_id:
+            type: integer
+            format: int64
+          path:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          created_at:
+            type: string
+            format: string
+          updated_at:
+            type: string
+            format: string
+  farmer-files-delete:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+      file_description:
+        type: integer
+        format: int64
+        description: 'optional in case you only wish to delete one particular file'

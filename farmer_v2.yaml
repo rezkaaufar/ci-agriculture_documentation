@@ -11,6 +11,8 @@ tags:
     description: Information about Farmer Groups
   - name: Farmer File
     description: Information about Farmer Files
+  - name: Farmer Field
+    description : Information about Farmer Field
 schemes:
   - http
   
@@ -112,6 +114,156 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/farmer-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+################################## FARMER FIELD ######################################
+  /farmer/field/find:
+    get:
+      tags:
+        - Farmer Field
+      summary: Find all field assigned to farmers
+      description: ''
+      operationId: findFarmerField
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: field_id
+          type: integer
+          required: false
+        - in: query
+          name: farmer_id
+          type: integer
+          required: false
+        - in: query
+          name: unit_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+        - in: query
+          name: desa_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-field-find'
+        '500':
+          description: internal server error
+  /farmer/field/findWithTotalArea:
+    get:
+      tags:
+        - Farmer Field
+      summary: Find all field assigned to farmers with total area
+      description: ''
+      operationId: findFarmerFieldWithTotalArea
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: field_id
+          type: integer
+          required: false
+        - in: query
+          name: farmer_id
+          type: integer
+          required: false
+        - in: query
+          name: unit_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+        - in: query
+          name: desa_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-field-find-with-total-area'
+        '500':
+          description: internal server error
+  /farmer/field/insert:
+    post:
+      tags:
+        - Farmer Field
+      summary: insert farmer field
+      description: ''
+      operationId: insertFarmerField
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted farmer field
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-field-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/field/update:
+    post:
+      tags:
+        - Farmer Field
+      summary: update farmer field
+      description: ''
+      operationId: updateFarmerField
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer field
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-field-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/field/delete:
+    post:
+      tags:
+        - Farmer
+      summary: delete farmer field
+      description: ''
+      operationId: deleteFarmerField
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted farmer field
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-field-delete'
       responses:
         '200':
           description: successful request
@@ -825,6 +977,226 @@ definitions:
       contact_id:
         type: integer
         format: int64
+  farmer-field-find:
+    type: array
+    items:
+      type: object
+      properties: 
+        field_id:
+          type: integer
+          format: int64 
+        assigment_id:
+          type: integer
+          format: int64
+        farmer_id:
+          type: integer
+          format: int64
+        unit_id:
+          type: integer
+          format: int64
+        season_id:
+          type: integer
+          format: int64
+        field_area:
+          type: integer
+          format: int64
+        desa_id:
+          type: integer
+          format: int64 
+        desa_code:
+          type: string
+          format: string 
+        kecamatan_id:
+          type: integer
+          format: int64 
+        kecamatan_code:
+          type: string
+          format: string
+        kabupaten_id:
+          type: integer
+          format: int64 
+        kabupaten_code:
+          type: string
+          format: string 
+        provinsi_id:
+          type: integer
+          format: int64 
+        provinsi_code:
+          type: integer
+          format: int64 
+        is_certified:
+          type: boolean
+          format: boolean 
+        ownership:
+          type: string
+          format: string
+        owned_since:
+          type: string
+          format: date 
+        field_points:
+          type: array
+          items:
+            $ref: '#/definitions/farmer-field-coordinates'
+        field_centroid:
+          type: object
+          properties:
+            longitude:
+              type: number
+              format: double
+            latitude:
+              type: number
+              format: double
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+  farmer-field-find-with-total-area:
+    type: array
+    items:
+      type: object
+      properties: 
+        field_id:
+          type: integer
+          format: int64 
+        assigment_id:
+          type: integer
+          format: int64
+        farmer_id:
+          type: integer
+          format: int64
+        unit_id:
+          type: integer
+          format: int64
+        season_id:
+          type: integer
+          format: int64
+        field_area:
+          type: integer
+          format: int64
+        desa_id:
+          type: integer
+          format: int64 
+        desa_code:
+          type: string
+          format: string 
+        kecamatan_id:
+          type: integer
+          format: int64 
+        kecamatan_code:
+          type: string
+          format: string
+        kabupaten_id:
+          type: integer
+          format: int64 
+        kabupaten_code:
+          type: string
+          format: string 
+        provinsi_id:
+          type: integer
+          format: int64 
+        provinsi_code:
+          type: integer
+          format: int64 
+        is_certified:
+          type: boolean
+          format: boolean 
+        ownership:
+          type: string
+          format: string
+        owned_since:
+          type: string
+          format: date 
+        field_points:
+          type: array
+          items:
+            $ref: '#/definitions/farmer-field-coordinates'
+        field_centroid:
+          type: object
+          properties:
+            longitude:
+              type: number
+              format: double
+            latitude:
+              type: number
+              format: double
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+  farmer-field-coordinates:
+    type: object
+    properties:
+      longitude:
+        type: number
+        format: double
+      latitude:
+        type: number
+        format: double
+  farmer-field-insert:
+    type: object
+    properties:
+      assignment_id:
+        type: integer
+        format: int64
+      desa_id:
+        type: integer
+        format: int64
+      field_area:
+        type: number
+        format: double
+      is_certified:
+        type: boolean
+        format: boolean
+      ownership:
+        type: string
+        format: string
+      owned_since:
+        type: string
+        format: date
+      longlat_list:
+        type: array
+        items:
+          $ref: '#/definitions/farmer-field-coordinates'
+  farmer-field-update:
+    type: object
+    properties:
+      field_id:
+        type: integer
+        format: int64
+      assignment_id:
+        type: integer
+        format: int64
+      desa_id:
+        type: integer
+        format: int64
+      field_area:
+        type: number
+        format: double
+      is_certified:
+        type: boolean
+        format: boolean
+      ownership:
+        type: string
+        format: string
+      owned_since:
+        type: string
+        format: date
+      longlat_list:
+        type: array
+        items:
+          $ref: '#/definitions/farmer-field-coordinates'
+  farmer-field-delete:
+    type: object
+    properties:
+      field_list:
+        type: array
+        items:
+          type: integer
+          format: int64
   farmer-group-find:
     type: array
     items:

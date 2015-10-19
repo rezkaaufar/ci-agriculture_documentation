@@ -159,41 +159,29 @@ paths:
             $ref: '#/definitions/farmer-field-find'
         '500':
           description: internal server error
-  /farmer/field/findWithTotalArea:
+  /farmer/field/findOne:
     get:
       tags:
         - Farmer Field
-      summary: Find all field assigned to farmers with total area
+      summary: Find one field by its id
       description: ''
-      operationId: findFarmerFieldWithTotalArea
+      operationId: findOne
       produces:
         - application/json
       parameters:
         - in: query
           name: field_id
           type: integer
-          required: false
+          required: true
         - in: query
-          name: farmer_id
-          type: integer
-          required: false
-        - in: query
-          name: unit_id
-          type: integer
-          required: false
-        - in: query
-          name: season_id
-          type: integer
-          required: false
-        - in: query
-          name: desa_id
-          type: integer
+          name: extra
+          type: boolean
           required: false
       responses:
         '200':
           description: successful request
           schema:
-            $ref: '#/definitions/farmer-field-find-with-total-area'
+            $ref: '#/definitions/farmer-field-find'
         '500':
           description: internal server error
   /farmer/field/insert:
@@ -269,6 +257,27 @@ paths:
           description: successful request
         '400':
           description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/field/findLastSeasonTotalArea:
+    get:
+      tags:
+        - Farmer Field
+      summary: Find total area of previous given season
+      description: ''
+      operationId: findLastSeasonTotalArea
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: season_id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-field-last-season-area'
         '500':
           description: internal server error
 ############################## FARMER DETAIL ###################################
@@ -1052,81 +1061,12 @@ definitions:
         updated_at:
           type: string
           format: date-time
-  farmer-field-find-with-total-area:
-    type: array
-    items:
-      type: object
-      properties: 
-        field_id:
-          type: integer
-          format: int64 
-        assigment_id:
-          type: integer
-          format: int64
-        farmer_id:
-          type: integer
-          format: int64
-        unit_id:
-          type: integer
-          format: int64
-        season_id:
-          type: integer
-          format: int64
-        field_area:
-          type: integer
-          format: int64
-        desa_id:
-          type: integer
-          format: int64 
-        desa_code:
-          type: string
-          format: string 
-        kecamatan_id:
-          type: integer
-          format: int64 
-        kecamatan_code:
-          type: string
-          format: string
-        kabupaten_id:
-          type: integer
-          format: int64 
-        kabupaten_code:
-          type: string
-          format: string 
-        provinsi_id:
-          type: integer
-          format: int64 
-        provinsi_code:
-          type: integer
-          format: int64 
-        is_certified:
-          type: boolean
-          format: boolean 
-        ownership:
-          type: string
-          format: string
-        owned_since:
-          type: string
-          format: date 
-        field_points:
-          type: array
-          items:
-            $ref: '#/definitions/farmer-field-coordinates'
-        field_centroid:
+        extra:
           type: object
           properties:
-            longitude:
+            total_field_area:
               type: number
               format: double
-            latitude:
-              type: number
-              format: double
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
   farmer-field-coordinates:
     type: object
     properties:
@@ -1197,6 +1137,12 @@ definitions:
         items:
           type: integer
           format: int64
+  farmer-field-last-season-area:
+    type: object
+    properties:
+      total_field_area:
+        type: number
+        format : double
   farmer-group-find:
     type: array
     items:

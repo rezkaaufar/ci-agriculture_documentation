@@ -237,7 +237,7 @@ paths:
   /farmer/field/delete:
     post:
       tags:
-        - Farmer
+        - Farmer Field
       summary: delete farmer field
       description: ''
       operationId: deleteFarmerField

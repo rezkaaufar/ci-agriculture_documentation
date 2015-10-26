@@ -1,0 +1,329 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: IFM
+basePath: /v2
+tags:
+  - name: Loan
+    description: Information about farner loan
+schemes:
+  - http
+  
+################################################################################
+##################################### PATHS ####################################
+################################################################################
+paths:
+  /supplyChain/loan/findTypes:
+    get:
+      tags:
+        - Loan
+      summary: Find all loan types and specifications
+      description: ''
+      operationId: findLoanTypes
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: master_loan_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/loan-type-find'
+        '500':
+          description: internal server error
+  /supplyChain/loan/findFarmerEligibility:
+    get:
+      tags:
+        - Loan
+      summary: Find specific farmer loan eligibility
+      description: ''
+      operationId: findFarmerEligibility
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_assignment_id
+          type: integer
+          required: true
+        - in: query
+          name: master_loan_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-eligibility-find'
+        '500':
+          description: internal server error
+  /supplyChain/loan/findFarmerLoanSummary:
+    get:
+      tags:
+        - Loan
+      summary: Find specific farmer loan summary
+      description: ''
+      operationId: findFarmerSummary
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_assignment_id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-loan-summary-find'
+        '500':
+          description: internal server error
+  /supplyChain/loan/findSeasonLoanSummary:
+    get:
+      tags:
+        - Loan
+      summary: Find farmers' loan summary on given season and unit
+      description: ''
+      operationId: findSeasonSummary
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          type: integer
+          required: true
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/season-loan-summary-find'
+        '500':
+          description: internal server error
+  /supplyChain/loan/insertFarmerLoanIssue:
+    post:
+      tags:
+        - Loan
+      summary: insert new farmer loan issue on specified farmer assignment (unit and season)
+      description: ''
+      operationId: insertFarmerLoanIssue
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted farmer loan issue
+          required: true
+          schema:
+            $ref: '#/definitions/loan-issue-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/loan/updateFarmerLoanIssue:
+    post:
+      tags:
+        - Loan
+      summary: update farmer loan issue on specified farmer assignment (unit and season)
+      description: ''
+      operationId: updateFarmerLoanIssue
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer loan issue
+          required: true
+          schema:
+            $ref: '#/definitions/loan-issue-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/loan/deleteFarmerLoanIssue:
+    post:
+      tags:
+        - Loan
+      summary: delete farmer loan issue on specified farmer assignment (unit and season)
+      description: ''
+      operationId: deleteFarmerLoanIssue
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted farmer loan issue
+          required: true
+          schema:
+            $ref: '#/definitions/loan-issue-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+definitions:
+  loan-type-find:
+    type: array
+    items:
+      type: object
+      properties:
+        loan_type_id:
+          type: integer
+          format: int64
+        loan_type_name:
+          type: string
+          format: string
+        limit_per_ha:
+          type: number
+          format: double
+        admin_percentage:
+          type: number
+          format: double
+        period:
+          type: integer
+          format: double
+  farmer-eligibility-find:
+    type: array
+    items:
+      type: object
+      properties:
+        loan_type_id:
+          type: integer
+          format: int64
+        loan_type_name:
+          type: string
+          format: string
+        farmer_id:
+          type: integer
+          format: int64
+        season_id:
+          type: integer
+          format: int64
+        season_field_area:
+          type: number
+          format: double
+        principle_fund:
+          type: number
+          format: double
+        administration_fee:
+          type: number
+          format: double
+        period:
+          type: integer
+          format: int64
+  farmer-loan-summary-find:
+    type: array
+    items:
+      type: object
+      properties:
+        loan_type_id:
+          type: integer
+          format: int64
+        loan_type_name:
+          type: string
+          format: string
+        farmer_id:
+          type: integer
+          format: int64
+        season_id:
+          type: integer
+          format: int64
+        season_field_area:
+          type: number
+          format: double
+        principle_fund:
+          type: number
+          format: double
+        administration_fee:
+          type: number
+          format: double
+        period:
+          type: integer
+          format: int64
+        credit:
+          type: number
+          format: double
+        credit_total:
+          type: number
+          format: double
+        status:
+          type: boolean
+          format: boolean
+  season-loan-summary-find:
+    type: array
+    items:
+      type: object
+      properties:
+        farmer_id:
+          type: integer
+          format: int64
+        farmer_cif:
+          type: string
+          format: string
+        farmer_name:
+          type: string
+          format: string
+        field_area:
+          type: number
+          format: double
+        credit_total:
+          type: number
+          format: double
+  loan-issue-insert:
+    type: object
+    properties:
+      farmer_assignment_id:
+        type: integer
+        format: int64
+      loan_type_id:
+        type: integer
+        format: int64
+      credit:
+        type: number
+        format: double
+  loan-issue-update:
+    type: object
+    properties:
+      farmer_assignment_id:
+        type: integer
+        format: int64
+      loan_type_id:
+        type: integer
+        format: int64
+      credit:
+        type: number
+        format: double
+        description: "optional on update"
+      status:
+        type: boolean
+        format: boolean
+        description: "optional on update"
+  loan-issue-delete:
+    type: object
+    properties:
+      farmer_assignment_id:
+        type: integer
+        format: int64
+      loan_type_id:
+        type: integer
+        format: int64

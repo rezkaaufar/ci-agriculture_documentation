@@ -5,8 +5,14 @@ info:
   title: IFM
 basePath: /v2
 tags:
+  - name: Plan
+    description: Supply Chain Plan
+  - name: Preferences
+    description: Supply Chain Preferences
+  - name: Input
+    description: Supply Chain Input
   - name: Loan
-    description: Information about farner loan
+    description: Information about farmer loan
 schemes:
   - http
   
@@ -14,6 +20,302 @@ schemes:
 ##################################### PATHS ####################################
 ################################################################################
 paths:
+  /supplyChain/plan/find:
+    get:
+      tags:
+        - Plan
+      summary: Find all Supply Chain Plan
+      description: ''
+      operationId: findSupplyChainPlan
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_id
+          type: integer
+          required: false
+        - in: query
+          name: farmer_group_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/supply-chain-plan-find'
+        '500':
+          description: internal server error
+  /supplyChain/plan/insert:
+    post:
+      tags:
+        - Plan
+      summary: Insert Supply Chain Plan
+      description: ''
+      operationId: insertSupplyChainPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted supply chain plan
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-plan-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/plan/update:
+    post:
+      tags:
+        - Plan
+      summary: Update Supply Chain Plan
+      description: ''
+      operationId: updateSupplyChainPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated supply chain plan
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-plan-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/plan/delete:
+    post:
+      tags:
+        - Plan
+      summary: Delete Supply Chain Plan
+      description: ''
+      operationId: deleteSupplyChainPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted supply chain plan
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-plan-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/preference/find:
+    get:
+      tags:
+        - Preferences
+      summary: Find all Supply Chain Preferences
+      description: ''
+      operationId: findSupplyChainPreference
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_assignment_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/supply-chain-preference-find'
+        '500':
+          description: internal server error
+  /supplyChain/preference/insert:
+    post:
+      tags:
+        - Preferences
+      summary: Insert Supply Chain Preferences
+      description: ''
+      operationId: insertSupplyChainPreference
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted supply chain preferences
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-preference-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/preference/update:
+    post:
+      tags:
+        - Preferences
+      summary: Update Supply Chain Preferences
+      description: ''
+      operationId: updateSupplyChainPreference
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated supply chain preferences
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-preference-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/preference/delete:
+    post:
+      tags:
+        - Preferences
+      summary: Delete Supply Chain Preferences
+      description: ''
+      operationId: deleteSupplyChainPreference
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted supply chain preferences
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-preference-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/input/find:
+    get:
+      tags:
+        - Input
+      summary: Find all Supply Chain Input
+      description: ''
+      operationId: findSupplyChainInput
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: farmer_assignment_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/supply-chain-input-find'
+        '500':
+          description: internal server error
+  /supplyChain/input/insert:
+    post:
+      tags:
+        - Input
+      summary: Insert Supply Chain Input
+      description: ''
+      operationId: insertSupplyChainInput
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted supply chain input
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-input-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/input/update:
+    post:
+      tags:
+        - Input
+      summary: Update Supply Chain Input
+      description: ''
+      operationId: updateSupplyChainInput
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated supply chain input
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-input-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /supplyChain/input/delete:
+    post:
+      tags:
+        - Input
+      summary: Delete Supply Chain Input
+      description: ''
+      operationId: deleteSupplyChainInput
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted supply chain input
+          required: true
+          schema:
+            $ref: '#/definitions/supply-chain-input-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
   /supplyChain/loan/findTypes:
     get:
       tags:
@@ -182,6 +484,211 @@ paths:
         '500':
           description: internal server error
 definitions:
+  supply-chain-plan-find:
+    type: array
+    items:
+      type: object
+      properties:
+        farmer_assignment_id:
+          type: integer
+          format: int64
+        farmer_group_id:
+          type: integer
+          format: int64
+        additional_notes:
+          type: string
+          format: string
+  supply-chain-plan-insert:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+        description: '(farmer_id, season_id, unit_id) or farmer_group_id'
+      season_id:
+        type: integer
+        format: int64
+        description: 'required if using farmer_id'
+      unit_id:
+        type: integer
+        format: int64
+        description: 'required if using farmer_id'
+      farmer_group_id:
+        type: integer
+        format: int64
+        description: '(farmer_id, season_id, unit_id) or farmer_group_id'
+      additional_notes:
+        type: string
+        format: string
+        description: 'optional'
+  supply-chain-plan-update:
+    type: object
+    properties:
+      season_id:
+        type: integer
+        format: int64
+        description: 'required'
+      farmer_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      farmer_group_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      additional_notes:
+        type: string
+        format: string
+        description: 'optional'
+  supply-chain-plan-delete:
+    type: object
+    properties:
+      season_id:
+        type: integer
+        format: int64
+        description: 'required'
+      farmer_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      farmer_group_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+  supply-chain-preference-find:
+    type: array
+    items:
+      type: object
+      properties:
+        farmer_assignment_id:
+          type: integer
+          format: int64
+        category_id:
+          type: integer
+          format: int64
+        brand_id:
+          type: integer
+          format: int64
+  supply-chain-preference-insert:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      farmer_group_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      season_id:
+        type: integer
+        format: int64
+        description: 'required'
+      category_id:
+        type: integer
+        format: int64
+        description: 'required'
+      brand_id:
+        type: integer
+        format: int64
+        description: 'required'
+  supply-chain-preference-update:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      farmer_group_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      season_id:
+        type: integer
+        format: int64
+        description: 'required'
+      category_id:
+        type: integer
+        format: int64
+        description: 'required'
+      brand_id:
+        type: integer
+        format: int64
+        description: 'optional'
+  supply-chain-preference-delete:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      farmer_group_id:
+        type: integer
+        format: int64
+        description: 'farmer_id or farmer_group_id'
+      season_id:
+        type: integer
+        format: int64
+        description: 'required'
+      category_id:
+        type: integer
+        format: int64
+        description: 'required'
+  supply-chain-input-find:
+    type: array
+    items:
+      type: object
+      properties:
+        farmer_assignment_id:
+          type: integer
+          format: int64
+        material_price_id:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int64
+  supply-chain-input-insert:
+    type: object
+    properties:
+      farmer_assignment_id:
+        type: integer
+        format: int64
+        description: 'required'
+      material_price_id:
+        type: integer
+        format: int64
+        description: 'required'
+      quantity:
+        type: integer
+        format: int64
+        description: 'required'
+  supply-chain-input-update:
+    type: object
+    properties:
+      farmer_assignment_id:
+        type: integer
+        format: int64
+        description: 'required'
+      material_price_id:
+        type: integer
+        format: int64
+        description: 'required'
+      quantity:
+        type: integer
+        format: int64
+        description: 'optional'
+  supply-chain-input-delete:
+    type: object
+    properties:
+      farmer_assignment_id:
+        type: integer
+        format: int64
+        description: 'required'
+      material_price_id:
+        type: integer
+        format: int64
+        description: 'required'
   loan-type-find:
     type: array
     items:

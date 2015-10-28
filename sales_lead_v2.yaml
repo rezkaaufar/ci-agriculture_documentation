@@ -1179,9 +1179,6 @@ definitions:
         address_postal:
           type: string
           format: string
-        tel_number:
-          type: string
-          format: string
         phone_number:
           type: string
           format: string
@@ -1210,9 +1207,6 @@ definitions:
         type: string
         format: string
       address_postal:
-        type: string
-        format: string
-      tel_number:
         type: string
         format: string
       phone_number:

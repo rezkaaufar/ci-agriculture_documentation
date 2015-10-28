@@ -39,6 +39,60 @@ paths:
           name: desa_id
           type: integer
           required: false
+        - in: query
+          name: unit_id
+          type: integer
+          required: false
+        - in: query
+          name: season_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-find'
+        '500':
+          description: internal server error 
+  /farmer/findNonGroupFarmer:
+    get:
+      tags:
+        - Farmer
+      summary: Find all non group farmers
+      description: ''
+      operationId: findNonGroupFarmer
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: unit_id
+          type: integer
+          required: true
+        - in: query
+          name: season_id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-find'
+        '500':
+          description: internal server error 
+  /farmer/findUnassignFarmer:
+    get:
+      tags:
+        - Farmer
+      summary: Find all unassign farmers
+      description: ''
+      operationId: findUnassignFarmer
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: season_id
+          type: integer
+          required: false
       responses:
         '200':
           description: successful request

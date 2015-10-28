@@ -175,6 +175,31 @@ paths:
           description: invalid input data
         '500':
           description: internal server error
+  /farmer/register:
+    post:
+      tags:
+        - Farmer
+      summary: register farmer on given season
+      description: ''
+      operationId: registerFarmer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted farmer
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-register'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
 ################################## FARMER FIELD ######################################
   /farmer/field/find:
     get:
@@ -880,6 +905,21 @@ definitions:
         items:
           type: string
           format: string
+  farmer-register:
+    type: object
+    properties:
+      farmer_id:
+        type: integer
+        format: int64
+      unit_id:
+        type: integer
+        format: int64
+      season_id:
+        type: integer
+        format: int64
+      agent_id:
+        type: integer
+        format: int64
   farmer-delete:
     type: object
     properties:

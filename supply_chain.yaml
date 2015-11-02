@@ -13,6 +13,10 @@ tags:
     description: Supply Chain Input
   - name: Loan
     description: Information about farmer loan
+  - name: Facility
+    description: Information about Facility
+  - name: Order
+    description: Information about Order Status
 schemes:
   - http
   
@@ -483,6 +487,256 @@ paths:
           description: invalid input data
         '500':
           description: internal server error
+  /order/receipt/find:
+    get:
+      tags:
+        - Order
+      summary: find order receipt
+      description: ''
+      operationId: findOrderReceipt
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: facility_id
+          type: integer
+          required: false
+        - in: query
+          name: material_price_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/order-receipt-find'
+        '500':
+          description: internal server error
+  /order/receipt/insert:
+    post:
+      tags:
+        - Order
+      summary: insert order receipt
+      description: ''
+      operationId: insertOrderReceipt
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted order receipt
+          required: true
+          schema:
+            $ref: '#/definitions/order-receipt-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /order/receipt/update:
+    post:
+      tags:
+        - Order
+      summary: update order receipt
+      description: ''
+      operationId: updateOrderReceipt
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated order receipt
+          required: true
+          schema:
+            $ref: '#/definitions/order-receipt-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /order/receipt/delete:
+    post:
+      tags:
+        - Order
+      summary: delete order receipt
+      description: ''
+      operationId: deleteOrderReceipt
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted order receipt
+          required: true
+          schema:
+            $ref: '#/definitions/order-receipt-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /order/issue/find:
+    get:
+      tags:
+        - Order
+      summary: find order issue
+      description: ''
+      operationId: findOrderIssue
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: facility_id
+          type: integer
+          required: false
+        - in: query
+          name: material_price_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/order-issue-find'
+        '500':
+          description: internal server error
+  /order/issue/insert:
+    post:
+      tags:
+        - Order
+      summary: insert order issue
+      description: ''
+      operationId: insertOrderIssue
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted order issue
+          required: true
+          schema:
+            $ref: '#/definitions/order-issue-insert'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /order/issue/update:
+    post:
+      tags:
+        - Order
+      summary: update order issue
+      description: ''
+      operationId: updateOrderIssue
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated order issue
+          required: true
+          schema:
+            $ref: '#/definitions/order-issue-update'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /order/issue/delete:
+    post:
+      tags:
+        - Order
+      summary: delete order issue
+      description: ''
+      operationId: deleteOrderIssue
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted order issue
+          required: true
+          schema:
+            $ref: '#/definitions/order-issue-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /master/facility/find:
+    get:
+      tags:
+        - Facility
+      summary: find Facility
+      description: ''
+      operationId: findFacility
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: type_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/master-facility-find'
+        '500':
+          description: internal server error
+  /master/facility/findMaterial:
+    get:
+      tags:
+        - Facility
+      summary: find Facility Material
+      description: ''
+      operationId: findFacilityMaterial
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: facility_id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/master-facility-material-find'
+        '500':
+          description: internal server error
 definitions:
   supply-chain-plan-find:
     type: array
@@ -834,3 +1088,169 @@ definitions:
       loan_type_id:
         type: integer
         format: int64
+  order-receipt-find:
+    type: array
+    items:
+      type: object
+      properties:
+        receipt_id:
+          type: integer
+          format: int64
+        facility_id:
+          type: integer
+          format: int64
+        material_price_id:
+          type: integer
+          format: int64
+        amount_received:
+          type: number
+          format: double
+        from_facility_id:
+          type: integer
+          format: int64
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+  order-receipt-insert:
+    type: object
+    properties:
+      facility_id:
+        type: integer
+        format: int64
+      material_price_id:
+        type: integer
+        format: int64
+      amount_received:
+        type: number
+        format: double
+      from_facility_id:
+        type: integer
+        format: int64
+  order-receipt-update:
+    type: object
+    properties:
+      receipt_id:
+        type: integer
+        format: int64
+      amount_received:
+        type: number
+        format: double
+  order-receipt-delete:
+    type: object
+    properties:
+      receipt_id:
+        type: array
+        items:
+          type: integer
+          format: int64
+  order-issue-find:
+    type: array
+    items:
+      type: object
+      properties:
+        issue_id:
+          type: integer
+          format: int64
+        facility_id:
+          type: integer
+          format: int64
+        material_price_id:
+          type: integer
+          format: int64
+        amount_issued:
+          type: number
+          format: double
+        to_facility_id:
+          type: integer
+          format: int64
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+  order-issue-insert:
+    type: array
+    items:
+      type: object
+      properties:
+        facility_id:
+          type: integer
+          format: int64
+        material_price_id:
+          type: integer
+          format: int64
+        amount_issued:
+          type: number
+          format: double
+        to_facility_id:
+          type: integer
+          format: int64
+  order-issue-update:
+    type: array
+    items:
+      type: object
+      properties:
+        issue_id:
+          type: integer
+          format: int64
+        amount_issued:
+          type: number
+          format: double
+  order-issue-delete:
+    type: object
+    properties:
+      issue_id:
+        type: array
+        items:
+          type: integer
+          format: int64
+  master-facility-find:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        type_id:
+          type: integer
+          format: int64
+        type_name:
+          type: string
+          format: string
+        owner_id:
+          type: integer
+          format: int64
+  master-facility-material-find:
+    type: array
+    items:
+      type: object
+      properties:
+        facility_id:
+          type: integer
+          format: int64
+        material_price_id:
+          type: integer
+          format: int64
+        total_stock:
+          type: number
+          format: double
+        total_received:
+          type: number
+          format: double
+        total_issued:
+          type: number
+          format: double
+        type_id:
+          type: integer
+          format: int64
+        owner_id:
+          type: integer
+          format: int64
+        total_demand:
+          type: number
+          format: double

@@ -212,6 +212,10 @@ paths:
         - application/json
       parameters:
         - in: query
+          name: assignment_id
+          type: integer
+          required: false
+        - in: query
           name: field_id
           type: integer
           required: false
@@ -249,7 +253,7 @@ paths:
         - application/json
       parameters:
         - in: query
-          name: field_id
+          name: field_assignment_id
           type: integer
           required: true
         - in: query
@@ -331,6 +335,106 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/farmer-field-delete'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/field/findStatic:
+    get:
+      tags:
+        - Farmer Field
+      summary: Find static information about farmerfield
+      description: ''
+      operationId: findFarmerFieldStatic
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: field_id
+          type: integer
+          required: false
+        - in: query
+          name: desa_id
+          type: integer
+          required: false
+      responses:
+        '200':
+          description: successful request
+          schema:
+            $ref: '#/definitions/farmer-field-find-static'
+        '500':
+          description: internal server error
+  /farmer/field/insertStatic:
+    post:
+      tags:
+        - Farmer Field
+      summary: insert farmer field static information
+      description: ''
+      operationId: insertFarmerFieldStatic
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be inserted farmer field
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-field-insert-static'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/field/updateStatic:
+    post:
+      tags:
+        - Farmer Field
+      summary: update farmer field static information
+      description: ''
+      operationId: updateFarmerFieldStatic
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be updated farmer field
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-field-update-static'
+      responses:
+        '200':
+          description: successful request
+        '400':
+          description: invalid input data
+        '500':
+          description: internal server error
+  /farmer/field/deleteStatic:
+    post:
+      tags:
+        - Farmer Field
+      summary: delete farmer field static information
+      description: ''
+      operationId: deleteFarmerFieldStatic
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: details of to-be deleted farmer field
+          required: true
+          schema:
+            $ref: '#/definitions/farmer-field-delete-static'
       responses:
         '200':
           description: successful request
@@ -1084,7 +1188,10 @@ definitions:
     type: array
     items:
       type: object
-      properties: 
+      properties:
+        field_assignment_id:
+          type: integer
+          format: int64 
         field_id:
           type: integer
           format: int64 
@@ -1176,7 +1283,7 @@ definitions:
       assignment_id:
         type: integer
         format: int64
-      desa_id:
+      field_id:
         type: integer
         format: int64
       field_area:
@@ -1198,13 +1305,13 @@ definitions:
   farmer-field-update:
     type: object
     properties:
-      field_id:
+      field_assignment_id:
         type: integer
         format: int64
       assignment_id:
         type: integer
         format: int64
-      desa_id:
+      field_id:
         type: integer
         format: int64
       field_area:
@@ -1226,7 +1333,62 @@ definitions:
   farmer-field-delete:
     type: object
     properties:
-      field_list:
+      field_assignment_id_list:
+        type: array
+        items:
+          type: integer
+          format: int64
+  farmer-field-find-static:
+    type: array
+    items:
+      type: object
+      properties:
+        field_id:
+          type: integer
+          format: int64
+        desa_id:
+          type: integer
+          format: int64
+        desa_code:
+          type: string
+          format: string 
+        kecamatan_id:
+          type: integer
+          format: int64 
+        kecamatan_code:
+          type: string
+          format: string
+        kabupaten_id:
+          type: integer
+          format: int64 
+        kabupaten_code:
+          type: string
+          format: string 
+        provinsi_id:
+          type: integer
+          format: int64 
+        provinsi_code:
+          type: integer
+          format: int64
+  farmer-field-insert-static:
+     type: object
+     properties:
+       desa_id:
+         type: integer
+         format: int64
+  farmer-field-update-static:
+    type: object
+    properties:
+      field_id:
+        type: integer
+        format: int64
+      desa_id:
+        type: integer
+        format: int64
+  farmer-field-delete-static:
+    type: object
+    properties:
+      field_id_list:
         type: array
         items:
           type: integer
